@@ -37,6 +37,7 @@ html, body, .map-box, .row {
     z-index: 999;
     padding: 20px 20px;
     position: relative;
+    overflow: hidden;
 }
 
 .col-md-auto {
@@ -146,7 +147,7 @@ html, body, .map-box, .row {
     box-shadow: 0.1px 0px 0px 2px rgba(134, 134, 134, 0.1) !important;
 }
 
-#meun-btn:hover, #list-btn:hover, #refresh-btn img:hover, #pw-chagen-btn:hover, #time-btn:hover, .user-btn img:hover, #mobile-record-btn:hover, .selector:hover {
+#meun-btn:hover, #list-btn:hover, #refresh-btn img:hover,#pw-chagen-btn:hover,#time-btn:hover,.user-btn img:hover,#mobile-record-btn:hover,.selector:hover,.beacon-shut:hover{
     cursor: pointer;
 }
 
@@ -247,7 +248,7 @@ canvas {
     margin-left: -20%;
 }
 
-.pw-chagen, #time-refresh, #mobile-record, #indoor-map {
+.pw-chagen,#time-refresh,#mobile-record,#indoor-map,.beacon-point{
     position: absolute;
     background-color: #ffffff;
     z-index: 9999;
@@ -257,7 +258,7 @@ canvas {
     left: 50%;
 }
 
-.pw-chagen-title {
+.pw-chagen-title,.beacon-title{
     width: 100%;
     height: 40px;
     line-height: 40px;
@@ -265,6 +266,7 @@ canvas {
     background-color: #007bff;
     color: #fff;
     border-radius: 3px 3px 0px 0px;
+    position: relative;
 }
 
 .pw-form {
@@ -502,4 +504,120 @@ canvas {
 .login-out a {
     text-decoration: none;
     color: #ffffff !important;
+}
+
+.beacon-point{
+    width: 60%;
+    height: auto;
+    transform: translate(-50%,-50%);
+}
+.beacon-title{
+    padding: 0px 20px;
+}
+.beacon-shut{
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.beacon-shut img{
+    width: 22px;
+    height: 22px;
+}
+.beacon-from{
+    width: 100%;
+    height: auto;
+    padding: 0 20px;
+    overflow: scroll;
+    position: relative;
+}
+.beacon-from table{
+    width: 1200px;
+    height: auto;
+    border-collapse: collapse;
+    text-align: center;
+    border-radius: 5px;
+    position: relative;
+    margin-top: 20px;
+}
+
+.title-1 .num,
+.title-1 .edit {
+    width: 100px;
+}
+
+.title-1 .name {
+    width: 200px;
+}
+
+.title-1 .floor,
+.title-1 .status {
+    width: 150px;
+}
+
+.title-1 .contract-service {
+    width: 800px;
+}
+
+.title-1 .note {
+    width: 300px;
+}
+
+table tr th,
+table tr td {
+    border: 1px solid #ccc;
+    padding: 10px 0px;
+}
+
+.title-2 .service {
+    padding: 0px 20px;
+}
+.not-text {
+    text-align: left !important;
+    padding: 1px 10px;
+}
+input {
+    width: 20px;
+    height: 20px;
+}
+.append-btn {
+    position: absolute;
+    margin-top: 20px;
+    /* float: left; */
+}
+.display-quantity {
+    position: relative;
+    height: 38px;
+    margin: 20px 0;
+}
+.display-text {
+    float: left;
+    line-height: 38px;
+    margin-right: 20px;
+}
+.display-quantity select {
+    padding: 4px 20px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.append-btn a{
+    color: #fff !important;
+    text-decoration: none;
+}
+.floor-plan{
+    margin: 0px 10px;
+}
+
+table img{
+    width: 100px;
+}
+.note-text{
+    text-align: left !important;
+    padding: 1px 10px;
+}
+.beacon-from .text img{
+    width: 28px;
 }

@@ -2,6 +2,7 @@ class mapconfig {
     constructor() {
         this.url = 'http://localhost/'
         this.baseurl = 'http://localhost:3000/'
+        this.beaconurl = 'http://localhost:2999/'
     }
 
     geturl() {
@@ -160,5 +161,25 @@ class mapconfig {
 
     getpersondetail() {
         return this.baseurl + 'user/'
+    }
+
+    getAllBeacondetail(){
+        return this.beaconurl + 'getAllBeacondetail'
+    }
+
+    insertnewbeacon(){
+        return this.beaconurl + 'insertnewbeacon'
+    }
+
+    getBeaconByid(){
+        return this.beaconurl + 'getBeaconByid/'
+    }
+
+    deleteBeacon(){
+        return this.beaconurl + 'deleteBeacon'
+    }
+
+    updateBeacon(){
+        return this.beaconurl + 'updateBeacon'
     }
 }

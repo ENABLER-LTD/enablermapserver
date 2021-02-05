@@ -87,8 +87,10 @@ var getpersondetail = function () {
             async: false,
             url: mapconfig.user() + pnumberlist[i],
             success: function (data) {
+		if(data.length != 0){
                 userdetaillist.push(data);
                 pnamedic[data[0].pnumber] = data[0].pname;
+		}
             },
             error: function (err) {
                 console.log(err);

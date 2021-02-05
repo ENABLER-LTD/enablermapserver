@@ -114,7 +114,34 @@ form{
 }
 .file-up{
     padding: 5px;
+    position: relative;
+    width: 50%;
 }
+.file-up #company{
+
+    position: absolute;
+    left: 0;
+    /* top: 0; */
+    opacity: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.file-up .file-text{
+    margin-left: 120px;
+    line-height: 34px;
+    color: #495057;
+}
+.file-up #btn{
+    cursor: pointer;
+    padding: 4px 20px;
+    background: #007bff;
+    color: #fff;
+    border: solid 1px #007bff;
+    border-radius: 3px;
+    float: left;
+    margin-right: 10px;
+}
+
 p, label{
     margin-bottom: 0px !important;
 }

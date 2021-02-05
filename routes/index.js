@@ -19,6 +19,20 @@ router.get('/updataservicesetting/:companycode', function (req, res, next) {
     res.render('updataservicesetting');
 });
 
+router.get('/beaconlist', function (req, res, next) {
+    res.render('beacon');
+});
+
+router.get('/beacon-add', function (req, res, next) {
+    res.render('beacon-add');
+});
+
+router.get('/updateBeacon/:beaconid', function (req, res, next) {
+    res.render('updatebeacon');
+});
+
+
+
 router.get('/addsetting', function (req, res, next) {
     res.render('officesetting');
 });
@@ -259,6 +273,51 @@ router.post('/loginbypd', async function (req, res, next) {
         res.json({"uid": "error"});
     }
 
+});
+
+//ユーザ登録パスワード認証携帯用
+router.post('/loginbypdphone', async function (req, res, next) {
+    try {
+        const result = await userpro.checker(req.body.data.mail, req.body.data.pwd);
+        if (result.length == 0) {
+            res.json({"status": "error"});
+        } else {
+            var dataString = JSON.stringify(result);
+            var data = JSON.parse(dataString);
+            const userdetail = await userpro.queryUserByUid(data[0].pnumber);
+            const result1 = await userpro.checkerpnumber(userdetail[0].pnumber);
+            const result2 = await userpro.getservicesetting(result1[0].pcompanycode);
+            const result3 = await userpro.getuploadtime(result1[0].pcompanycode);
+            if (result1.length != 0) {
+                dataString = JSON.stringify(result1);
+                data = JSON.parse(dataString);
+                var str = data[0].pcompanycode + data[0].poffice + data[0].pdep + data[0].pnumber;
+                req.session.isLogin = 1;
+                var enableservicelist= [];
+                if(result2[0].outdoormap == 1){
+                    enableservicelist.push("outdoormap");
+                }
+                if(result2[0].indoormap == 1){
+                    enableservicelist.push("indoormap");
+                }
+                if(result2[0].beacon == 1){
+                    enableservicelist.push("beacon");
+                }
+                if(result2[0].area == 1){
+                    enableservicelist.push("area");
+                }
+                if(result2[0].calutor == 1){
+                    enableservicelist.push("calculation");
+                }
+                res.json({"uid": str,"role":userdetail[0].prole,"service":enableservicelist,"upload":result3[0].uploadtime});
+            } else {
+                res.json({"status": "error"});
+            }
+        }
+    } catch (e) {
+        console.log(e);
+        res.json({"status": "error"});
+    }
 });
 
 

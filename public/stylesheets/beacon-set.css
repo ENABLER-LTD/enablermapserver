@@ -1,0 +1,115 @@
+*{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+html,body{
+    width: 100%;
+    position: relative;
+}
+ul{
+    margin-bottom: 0px !important;
+}
+.beacon-set-box{
+    width: 95%;
+    box-shadow: 0.1px 0px 0px 2px rgba(134, 134, 134, 0.1);
+    position: relative;
+    margin: 20px auto;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    position: relative;
+}
+.navigation-box{
+    height: 38px;
+    position: relative;
+    background-color: #007bff;
+    padding: 0px 20px;
+    border-radius: 3px 3px 0 0;
+}
+.beacon-title{
+    height: 38px;
+    float: left;
+}
+.beacon-title img{
+    height: 24px;
+    float: left;
+    position: absolute;
+    top: 50%;
+    margin-top: -12px;
+}
+.beacon-title h3{
+    line-height: 38px;
+    margin-left: 34px;
+    margin-bottom: 0px !important;
+    font-size: 18px;
+    color: #fff;
+}
+.return-bnt{
+    position: absolute;
+    right: 20px;
+}
+.return-bnt img{
+    height: 20px;
+}
+
+.edit {
+    position: relative;
+    padding: 20px;
+}
+.name,.uuid,.other,.point{
+    width: 100%;
+}
+.name-title{
+    width: 80px;
+    /* flex: 0 0 6%; */
+    float: left;
+    padding: .375rem 0;
+}
+.name input{
+    width: 500px;
+}
+.uuid,.other,.point,.note{
+    width: 100%;
+    margin-top: 20px;
+}
+.uuid ul{
+    width: 90%;
+    display: flex;
+}
+.uuid ul li{
+    display: flex;
+}
+.uuid ul li .line{
+    margin: 0 10px;
+    color: #ccc;
+}
+.other ul,.point ul{
+    width: 100%;
+    display: flex;
+}
+.other ul li,.point ul li{
+    /* width: 100%; */
+    margin-right: 20px;
+    display: flex;
+}
+.other ul li input,.point ul li input{
+    width: 70% ;
+}
+.note textarea{
+    width: 94%;
+    height: 100px;
+    border-color: #ccc;
+    padding: 10px;
+    outline: none;
+    border-radius: 5px;
+    resize: none;
+}
+.footer-btn{
+    margin-top: 20px;
+    display: flex;
+    justify-content:center;
+}
+#submit-btn,#danger-btn{
+    width: 10%;
+    margin-right: 16px;
+}

@@ -1,6 +1,7 @@
 var positionInfo = [];
 let inputList = document.getElementById('input-list')
 let createBtn = document.getElementById('create-btn')
+var fileText = document.querySelector('.file-text')
 map = new mapconfig();
 
 const trashIconSvg = '<svg t="1605763994929" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2902"><path d="M970.24 256h-301.44L592.64 160H431.36L355.2 256H53.76V192h270.72l76.16-96h222.72L699.52 192h270.72v64zM803.84 928H220.16L144 356.48l64-8.96 67.84 516.48h472.32l67.84-516.48 64 8.96-76.16 571.52z" fill="#ffffff" p-id="2903"></path><path d="M376.96 412.16h64v371.84h-64zM583.04 412.16h64v371.84h-64z" fill="#ffffff" p-id="2904"></path></svg>'
@@ -131,6 +132,7 @@ fileUploader.onchange = function (e) {
     window.URL.revokeObjectURL(blobURL)
     file = e.target.files[0]
     filename = file.name
+    fileText.innerHTML = filename
     var extname = filename.substr(filename.lastIndexOf('.') + 1, filename.length)
     if (extname !== 'svg') {
         if (file.outerHTML) {
@@ -250,8 +252,10 @@ function dataGet() {
             document.getElementById('jp').value = data[0].building;
             document.getElementById('en').value = data[0].buildingeng;
             document.getElementById('floor').value = data[0].floor;
+            fileText.innerHTML = data[0].svgfile;
+            // document.getElementById('company').innerText =data[0].svgfile;
             preview.src = map.geturl() + data[0].svgfile;
-            targetfilename=data[0].svgfile;
+            targetfilename = data[0].svgfile;
             document.getElementById('note-text').value = data[0].note;
             var coordinatelist = data[0].position.split('|');
             ulDom(createFormRow, coordinatelist);

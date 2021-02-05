@@ -195,7 +195,7 @@
                         for (let j = 0; j < dataArr.length; j++) {
                             dataArr[j] = JSON.parse(dataArr[j]);
                             if (dataArr[j].tim >= target_time_min && dataArr[j].tim <= target_time_max) {
-                                if (j != 0 || j != (dataArr.length - 1)) {
+                                if (j != 0 && j != (dataArr.length - 1)) {
                                     if (dataArr[j - 1].tim < dataArr[j].tim) {
                                         resultArr.push(dataArr[j]);
                                     }

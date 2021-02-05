@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beacon設定</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+    <script src="/javascripts/configsetting.js"></script>
+    <link rel="stylesheet" href="/stylesheets/beacon-set.css">
+</head>
+<body>
+<div class="beacon-set-box">
+    <div>
+        <div class="navigation-box">
+            <div class="beacon-title">
+                <img src="icon/Settings.png" alt="">
+                <h3>Beacon設定</h3>
+            </div>
+            <div class="return-bnt">
+                <a href="../beaconlist">
+                    <button type="button" class="btn btn-primary">
+                        <img src="/icon/return.png" alt="">
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="edit">
+            <div class="name">
+                <div class="name-title">Name</div>
+                <input id="name" class="form-control" type="text" placeholder="半角60文字（半角のみ：英/数/記号）">
+            </div>
+            <div class="uuid">
+                <div class="name-title">UUID</div>
+                <ul>
+                    <li>
+                        <input class="form-control" id="uuid-one" type="text" placeholder="6桁">
+                        <div class="line">_</div>
+                    </li>
+                    <li>
+                        <input class="form-control" id="uuid-two" type="text" placeholder="4桁">
+                        <div class="line">_</div>
+                    </li>
+                    <li>
+                        <input class="form-control" id="uuid-three" type="text" placeholder="4桁">
+                        <div class="line">_</div>
+                    </li>
+                    <li>
+                        <input class="form-control" id="uuid-four" type="text" placeholder="4桁">
+                        <div class="line">_</div>
+                    </li>
+                    <li class="lenght">
+                        <input class="form-control" id="uuid-fives" type="text" placeholder="12桁">
+                    </li>
+                </ul>
+            </div>
+            <div class="other">
+                <ul>
+                    <li>
+                        <div class="name-title">Major</div>
+                        <input class="form-control" id="major" type="text" placeholder="0~65535">
+                    </li>
+                    <li>
+                        <div class="name-title">Minor</div>
+                        <input class="form-control" id="minor" type="text" placeholder="0~65535">
+                    </li>
+                    <li>
+                        <div class="name-title">TxPower</div>
+                        <input class="form-control" id="tx-power" type="text" placeholder="dbm">
+                    </li>
+                </ul>
+            </div>
+            <div class="point">
+                <ul>
+                    <li>
+                        <div class="name-title">緯度/Lon</div>
+                        <input class="form-control" id="lon" type="text" placeholder="nn.nnnnnn">
+                    </li>
+                    <li>
+                        <div class="name-title">経度/Lat</div>
+                        <input class="form-control" id="lat" type="text" placeholder="nn.nnnnnn">
+                    </li>
+                    <li>
+                        <div class="name-title">高度/Alt</div>
+                        <input class="form-control" id="alt" type="text" placeholder="nnnn.nn">
+                    </li>
+                    <li>
+                        <div class="name-title">階/Floor</div>
+                        <input class="form-control" id="floor" type="text" placeholder="">
+                    </li>
+                </ul>
+            </div>
+            <div class="note">
+                <div class="name-title">Note</div>
+                <textarea name="" id="note" cols="30" rows="10"></textarea>
+            </div>
+            <div class="footer-btn">
+                <button type="button" class="btn btn-primary" id="submit-btn">Update</button>
+                <button type="button" class="btn btn-danger" id="danger-btn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/javascripts/updateBeacon.js"></script>
+</html>

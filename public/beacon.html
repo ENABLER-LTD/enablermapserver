@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beacon</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="/javascripts/configsetting.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/beacon.css">
+</head>
+
+<body>
+<div class="form-box">
+    <div class=" beacon">
+        <div class="navigation-box">
+            <div class="beacon-list-bnt">
+                <img src="icon/Settings.png" alt="">
+                <h3>Beacon管理</h3>
+            </div>
+            <div class="return-bnt">
+                <a href="./mainmap">
+                    <button type="button" class="btn btn-primary">
+                        <img src="icon/return.png" alt="">
+                    </button>
+                </a>
+            </div>
+        </div>
+        <table id="target-list">
+            <tr class="title-1">
+                <th class="num" rowspan='2'>No.</th>
+                <th class="edit" rowspan='2'>Edit</th>
+                <th class="name" rowspan='2'>Name</th>
+                <th class="" colspan='4'>Beacon ID</th>
+                <th class="" colspan='4'>Location</th>
+                <th class="note" rowspan='2'>Note</th>
+            </tr>
+            <tr class="title-2">
+                <td class="language" style="width: 400px;">UUID</td>
+                <td class="language" style="width: 100px;">Major</td>
+                <td class="language" style="width: 100px;">Minor</td>
+                <td class="language" style="width: 100px;">TxPower</td>
+                <td class="language" style="width: 200px;">Lon</td>
+                <td class="language" style="width: 200px;">Lat</td>
+                <td class="language" style="width: 100px;">Ait</td>
+                <td class="language" style="width: 100px;">Floor</td>
+            </tr>
+        </table>
+        <div class="append-btn">
+            <button type="button" class="btn btn-primary">
+                <a href="./beacon-add">Beacon追加</a>
+            </button>
+        </div>
+        <div class="display-quantity">
+            <div class="display-text">表示件数</div>
+            <select name="" id="">
+                <option value="">50</option>
+                <option value="">100</option>
+                <option value="">200</option>
+                <option value="">300</option>
+            </select>
+        </div>
+    </div>
+</div>
+</body>
+<script src="javascripts/beacon.js"></script>
+
+</html>
