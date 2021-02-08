@@ -87,10 +87,10 @@ var getpersondetail = function () {
             async: false,
             url: mapconfig.user() + pnumberlist[i],
             success: function (data) {
-		if(data.length != 0){
-                userdetaillist.push(data);
-                pnamedic[data[0].pnumber] = data[0].pname;
-		}
+                if (data.length != 0) {
+                    userdetaillist.push(data);
+                    pnamedic[data[0].pnumber] = data[0].pname;
+                }
             },
             error: function (err) {
                 console.log(err);
@@ -869,6 +869,12 @@ function dorole() {
                     }
                     if (data[i].officesetting != 1) {
                         $("#department").remove();
+                    }
+                    if (data[i].beaconshow != 1) {
+                        $("#beacon").remove();
+                    }
+                    if (data[i].beaconsetting != 1) {
+                        $("#beacon-point").remove();
                     }
                 }
 

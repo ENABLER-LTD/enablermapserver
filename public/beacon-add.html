@@ -40,7 +40,7 @@
                 <div class="name-title">UUID</div>
                 <ul>
                     <li>
-                        <input class="form-control" id="uuid-one" type="text" placeholder="6桁">
+                        <input class="form-control" id="uuid-one" type="text" placeholder="8桁">
                         <div class="line">_</div>
                     </li>
                     <li>
@@ -101,7 +101,7 @@
                 <textarea name="" id="note" cols="30" rows="10"></textarea>
             </div>
             <div class="footer-btn">
-                <button type="button" class="btn btn-primary" id="submit-btn">UpDate</button>
+                <button type="button" class="btn btn-primary" id="submit-btn">ADD</button>
                 <!-- <button type="button" class="btn btn-danger" id="danger-btn">Delete</button> -->
             </div>
         </div>
@@ -113,7 +113,7 @@
 
     document.getElementById("submit-btn").addEventListener("click", function () {
         var b_name = document.getElementById("name").value;
-        var b_uuid = "" + document.getElementById("uuid-one").value + document.getElementById("uuid-two").value + document.getElementById("uuid-three").value + document.getElementById("uuid-four").value + document.getElementById("uuid-fives").value;
+        var b_uuid = document.getElementById("uuid-one").value + "-" + document.getElementById("uuid-two").value + "-" + document.getElementById("uuid-three").value + "-" + document.getElementById("uuid-four").value + "-" + document.getElementById("uuid-fives").value;
         var b_major = document.getElementById("major").value;
         var b_minor = document.getElementById("minor").value;
         var b_txpower = document.getElementById("tx-power").value;
@@ -123,36 +123,42 @@
         var b_floor = document.getElementById("floor").value;
         var b_note = document.getElementById("note").value;
 
-        if (b_name != "" && b_uuid != "" && b_major != "" && b_minor != "" && b_txpower != "") {
-            $.ajax({
-                type: 'POST',
-                url: mapconfig.insertnewbeacon(),
-                contentType: "application/json",
-                async: true,
-                data: JSON.stringify({
-                    "data": {
-                        "b_name": b_name,
-                        "b_uuid": b_uuid,
-                        "b_major": b_major,
-                        "b_minor": b_minor,
-                        "b_txpower": b_txpower,
-                        "b_lon": b_lon,
-                        "b_lat": b_lat,
-                        "b_alt": b_alt,
-                        "b_floor": b_floor,
-                        "b_note": b_note
-                    }
-                }),
-                success: function (data) {
-                    if (data.status == "success") {
-                        alert("add success");
-                        window.location.href = '/beaconlist';
-                    }
-                },
-                error: function () {
+        if(document.getElementById("uuid-one").value.length != 8　|| document.getElementById("uuid-two").value.length != 4 || document.getElementById("uuid-three").value.length != 4 || document.getElementById("uuid-four").value.length != 4 || document.getElementById("uuid-fives").value.length != 12){
+            alert("UUIDを桁数を確認ください。")
+        }else{
+            if (b_name != "" && b_uuid != "" && b_major != "" && b_minor != "" && b_txpower != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: mapconfig.insertnewbeacon(),
+                    contentType: "application/json",
+                    async: true,
+                    data: JSON.stringify({
+                        "data": {
+                            "b_name": b_name,
+                            "b_uuid": b_uuid,
+                            "b_major": b_major,
+                            "b_minor": b_minor,
+                            "b_txpower": b_txpower,
+                            "b_lon": b_lon,
+                            "b_lat": b_lat,
+                            "b_alt": b_alt,
+                            "b_floor": b_floor,
+                            "b_note": b_note
+                        }
+                    }),
+                    success: function (data) {
+                        if (data.status == "success") {
+                            alert("add success");
+                            window.location.href = '/beaconlist';
+                        }
+                    },
+                    error: function () {
 
-                }
-            })
+                    }
+                })
+            }else{
+                alert("必要なデータを入力してください。")
+            }
         }
     })
 
