@@ -182,4 +182,8 @@ class mapconfig {
     updateBeacon(){
         return this.beaconurl + 'updateBeacon'
     }
+
+    updateBeaconPosition(){
+        return this.beaconurl + 'updateBeaconPosition'
+    }
 }

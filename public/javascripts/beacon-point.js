@@ -39,92 +39,181 @@ beaconTitle.onmouseup = function () {
 function displayDom(ele) {
     if (ele.style.display == 'none') {
         ele.style.display = 'block'
-        // getBeacon()
+        getBeacon()
     } else {
         ele.style.display = 'none'
     }
 }
-beaconMeunBtn.onclick = function(){
+
+beaconMeunBtn.onclick = function () {
     displayDom(beaconBox)
 }
-btn.onclick = function() {
+btn.onclick = function () {
     displayDom(beaconBox)
 }
 
 //getBeaconData
-function getBeacon(){
+function getBeacon() {
+
+    document.querySelectorAll('.removeflag').forEach(function (item) {
+        item.remove()
+    })
     $.ajax({
         type: 'GET',
-        url: './javascripts/beaconData.json',
+        url: mapconfig.getAllBeacondetail(),
         async: false,
         dataType: 'json',
-        success: function(data){
-            for(var i = 0; i < data.length; i++){
-                var beaconFrom = document.querySelector('.beacon-from')
-                var tableEle = beaconFrom.querySelector('table')
-                var tr = document.createElement('tr')
-                var tdNum = document.createElement('td')
-                var icons = document.createElement('td')
-                var name = document.createElement('td')
-                var uuId = document.createElement('td')
-                var major = document.createElement('td')
-                var minor = document.createElement('td')
-                var note = document.createElement('td')
-                var iconImg = document.createElement('img')
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var temp = [];
+                temp[0] = data[i].b_id;
+                temp[1] = './icon/Positioning.png'
+                temp[2] = data[i].b_name;
+                temp[3] = data[i].b_uuid;
+                temp[4] = data[i].b_major;
+                temp[5] = data[i].b_minor;
+                temp[6] = data[i].b_note;
 
-                tr.classList.add('text')
-                iconImg.classList.add('imgs')
-                uuId.classList.add('uuid')
-                note.classList.add('note-text')
 
-                tableEle.appendChild(tr)
-                tr.appendChild(tdNum)
-                tr.appendChild(icons)
-                tr.appendChild(name)
-                tr.appendChild(uuId)
-                tr.appendChild(major)
-                tr.appendChild(minor)
-                tr.appendChild(note)
-                icons.appendChild(iconImg)
+                var tr = `<td>${temp[0]}</td>
+                        <td class="imgs">
+                        <img src="${temp[1]}" onclick='latlngedit(${temp[0]})'/>
+                        </td>
+                        <td>${temp[2]}</td>
+                        <td>${temp[3]}</td>
+                        <td>${temp[4]}</td>
+                        <td>${temp[5]}</td>
+                        <td class="note-text">${temp[6]}</td>`
 
-                var eight = data[i].uuid.substring(8,0)
-                var fourOne = data[i].uuid.substring(12,8)
-                var fourTwo = data[i].uuid.substring(12,16)
-                var fourThree = data[i].uuid.substring(16,20)
-                var twelve = data[i].uuid.substring(20,32)
-                var slice = eight + '-' + fourOne + '-' + fourTwo + '-' + fourThree + '-' + twelve
-
-                tdNum.innerText = i + 1
-                iconImg.src = './icon/Positioning.png'
-                uuId.innerText = slice
-                name.innerText = data[i].name
-                major.innerText = data[i].major
-                minor.innerText = data[i].minor
-                note.innerText = data[i].note
+                $("#beacondetailtb").append('<tr class="text removeflag">' + tr + '</tr>');
             }
-            edit()
+            // edit()
         },
-        error: function(err){
+        error: function (err) {
             console.log(err)
         }
     })
 }
-//获取当前点击的第几个icon
-function edit() {
-    var beaconFrom = document.querySelector('.beacon-from')
-    var imgData = beaconFrom.querySelectorAll('.imgs')
-    for (var i = 0; i < imgData.length; i++) {
-        imgData[i].index = i
-        imgData[i].addEventListener('mousedown', function () {
-            if(beaconBox.style.display == 'block') {
-                pointGet(imgData[this.index])
 
-                //通过子级tdBtn，获取父级下的uuid
-                var fatherNode = imgData[this.index].parentNode.parentNode
-                var uuId = fatherNode.querySelector('.uuid')
-                console.log(uuId)
-                // var imgData = beaconBox.querySelectorAll('.imgs')
+var beaconmarker = null;
+
+//获取当前点击的第几个icon
+function latlngedit(b_id) {
+    $.ajax({
+        type: 'GET',
+        url: mapconfig.getBeaconByid() + b_id,
+        dataType: 'json',
+        success: function (data) {
+            if (beaconmarker != null) {
+                beaconmarker.setMap(null);
+                beaconmarker = null;
             }
-        })
-    }
+            if ((data[0].b_lat != 0 && data[0].b_lon != 0) && (data[0].b_lat != null && data[0].b_lon != null)) {
+                beaconmarker = new google.maps.Marker({
+                    map,
+                    draggable: true,
+                    position: {lat: Number(data[0].b_lat), lng: Number(data[0].b_lon)},
+                });
+
+                var temppoint = {lat: Number(data[0].b_lat), lng: Number(data[0].b_lon)};
+                map.setCenter(temppoint);
+
+                google.maps.event.addListener(beaconmarker, "click", function (e) {
+                    var result = window.confirm("この位置でBeacon設定ですか？");
+                    if (result == true) {
+                        $.ajax({
+                            type: 'POST',
+                            url: mapconfig.updateBeaconPosition(),
+                            contentType: "application/json",
+                            dataType: "text",
+                            data: JSON.stringify({
+                                "data": {
+                                    "b_id": b_id,
+                                    "b_lon": beaconmarker.position.lng(),
+                                    "b_lat": beaconmarker.position.lat(),
+                                    "b_alt": "0",
+                                    "b_floor": "0"
+                                }
+                            }),
+                            success: function (data) {
+                                if (JSON.parse(data).status == 'success') {
+                                    alert("Beacon Position updata success!");
+                                    beaconmarker.setMap(null);
+                                    beaconmarker = null;
+                                    getBeacon();
+                                } else {
+                                    alert("Beacon Position updata failed!");
+                                }
+                            },
+                            error: function () {
+                                alert('Please check your network,if it is still not work.Please look admin for help!');
+                            }
+                        })
+                    }
+
+                })
+            } else {
+                alert("Beacon position is not exist!Add now");
+                var updateBeaconListener = google.maps.event.addListener(map, "rightclick", function (event) {
+                    if (beaconmarker != null) {
+                        beaconmarker.setMap(null);
+                        beaconmarker = null;
+                    }
+
+                    var lat = event.latLng.lat();
+                    var lng = event.latLng.lng();
+                    beaconmarker = new google.maps.Marker({
+                        map,
+                        draggable: true,
+                        position: {lat: lat, lng: lng},
+                    });
+
+
+                    google.maps.event.addListener(beaconmarker, "click", function (e) {
+                        var result = window.confirm("この位置でBeacon設定ですか？");
+                        if (result == true) {
+                            $.ajax({
+                                type: 'POST',
+                                url: mapconfig.updateBeaconPosition(),
+                                contentType: "application/json",
+                                dataType: "text",
+                                data: JSON.stringify({
+                                    "data": {
+                                        "b_id": b_id,
+                                        "b_lon": beaconmarker.position.lng(),
+                                        "b_lat": beaconmarker.position.lat(),
+                                        "b_alt": "0",
+                                        "b_floor": "0"
+                                    }
+                                }),
+                                success: function (data) {
+                                    if (JSON.parse(data).status == 'success') {
+                                        alert("Beacon Position updata success!");
+                                        google.maps.event.removeListener(updateBeaconListener);
+                                        beaconmarker.setMap(null);
+                                        beaconmarker = null;
+                                        getBeacon();
+                                    } else {
+                                        alert("Beacon Position updata failed!");
+                                    }
+                                },
+                                error: function () {
+                                    alert('Please check your network,if it is still not work.Please look admin for help!');
+                                }
+                            })
+                        }
+
+                    })
+                });
+            }
+        }
+        ,
+        error: function (err) {
+            console.log(err)
+        }
+
+    })
+
 }
+
+
