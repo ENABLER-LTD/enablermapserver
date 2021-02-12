@@ -40,8 +40,10 @@ function displayDom(ele) {
     if (ele.style.display == 'none') {
         ele.style.display = 'block'
         getBeacon()
+        $.cookie('beaconsetting', 'true');
     } else {
         ele.style.display = 'none'
+        $.cookie('beaconsetting', 'false');
     }
 }
 
@@ -154,7 +156,7 @@ function latlngedit(b_id) {
                 })
             } else {
                 alert("Beacon position is not exist!Add now");
-                var updateBeaconListener = google.maps.event.addListener(map, "rightclick", function (event) {
+                var updateBeaconListener = google.maps.event.addListener(map, "dblclick", function (event) {
                     if (beaconmarker != null) {
                         beaconmarker.setMap(null);
                         beaconmarker = null;

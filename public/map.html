@@ -270,7 +270,9 @@
             <div class="beacon-title">
                 <span>Beacon位置設定</span>
                 <div class="beacon-shut">
-                    <img src="icon/shut.png" alt="">
+                    <img src="icon/shut.png" onclick="function f() {
+                      $.cookie('beaconsetting', 'false');
+                    }">
                 </div>
             </div>
             <div class="beacon-from">

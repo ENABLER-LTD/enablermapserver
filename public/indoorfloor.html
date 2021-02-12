@@ -97,6 +97,7 @@
         }).on('click', function () {
             $.cookie('filename', floorinfo[i].svgfile);
             $.cookie('keypoints', floorinfo[i].keypoint);
+            $.cookie('floornumber', floorinfo[i].floor);
             if (i == floorinfo.length - 1) {
                 $.cookie('flooralt', floorinfo[i].alt + ";" + '999999');
             } else {
@@ -168,8 +169,10 @@
         }).addTo(map);
 
     }
-    timedraw(showallposition, 3000);
-
+    var beaconSetting = $.cookie('beaconsetting');
+    if(beaconSetting != 'true'){
+        timedraw(showallposition, 3000);
+    }
 
 </script>
 </body>

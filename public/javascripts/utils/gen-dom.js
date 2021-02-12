@@ -75,11 +75,11 @@ class GenDOM {
             <ul>
                 <li>
                     <img src="/icon/map.png" alt="">
-                    <a href="#" class="resume-display-btn"><span>行动履历表示</span></a>
+                    <a href="#" class="resume-display-btn"><span>過去履歴表示</span></a>
                 </li>
                 <li class="updateuserbtn">
                     <img src="/icon/user.png" alt="">
-                    <a class="urlset"><span>用户情报变更</span></a>
+                    <a class="urlset"><span>ユーザー編集</span></a>
                 </li>
             </ul>
         </div>

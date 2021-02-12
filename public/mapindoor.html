@@ -14,16 +14,183 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <style>
-        html, body, #indoormap {
+        html,
+        body,
+        #indoormap {
             height: 100%;
             width: 100%;
         }
 
+        .leaflet-container {
+            font: 1rem "Helvetica Neue", Arial, Helvetica, sans-serif !important;
+        }
 
+        .beacon-point {
+            width: 60%;
+            height: auto;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            background-color: #ffffff;
+            z-index: 9999;
+            box-shadow: 0.1px 0px 0px 2px rgba(134, 134, 134, 0.1);
+            border-radius: 3px;
+            top: 50%;
+            left: 50%;
+        }
+
+        .beacon-title {
+            padding: 0px 20px;
+            box-sizing: border-box;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 3px 3px 0px 0px;
+            position: relative;
+        }
+
+        .beacon-shut {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .beacon-shut img {
+            width: 22px;
+            height: 22px;
+        }
+
+        .beacon-from {
+            width: 100%;
+            height: auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+            overflow: scroll;
+            position: relative;
+        }
+
+        .beacon-from table {
+            width: 1200px;
+            height: auto;
+            border-collapse: collapse;
+            text-align: center;
+            border-radius: 5px;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .title-1 .num,
+        .title-1 .edit {
+            width: 100px;
+        }
+
+        .title-1 .name {
+            width: 200px;
+        }
+
+        .title-1 .floor,
+        .title-1 .status {
+            width: 150px;
+        }
+
+        .title-1 .contract-service {
+            width: 800px;
+        }
+
+        .title-1 .note {
+            width: 300px;
+        }
+
+        table tr th,
+        table tr td {
+            border: 1px solid #ccc;
+            padding: 10px 0px;
+        }
+
+        .title-2 .service {
+            padding: 0px 20px;
+        }
+
+        .not-text {
+            text-align: left !important;
+            padding: 1px 10px;
+        }
+
+        input {
+            width: 20px;
+            height: 20px;
+        }
+
+        .append-btn {
+            position: absolute;
+            margin-top: 20px;
+            /* float: left; */
+        }
+
+        .display-quantity {
+            position: relative;
+            height: 38px;
+            margin: 20px 0;
+        }
+
+        .display-text {
+            float: left;
+            line-height: 38px;
+            margin-right: 20px;
+        }
+
+        .display-quantity select {
+            padding: 4px 20px;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .beacon-from .text img {
+            width: 28px;
+        }
     </style>
 </head>
 <body>
 <div id="indoormap"></div>
+<div id="beacondataform" class="beacon-point" style="display: none;">
+    <div class="beacon-title">
+        <span>Beacon位置設定</span>
+        <div class="beacon-shut">
+            <img src="icon/shut.png" alt="">
+        </div>
+    </div>
+    <div class="beacon-from">
+        <table id="beacondetailtb">
+            <tr class="title-1">
+                <th class="num" rowspan='2'>No.</th>
+                <th class="edit" rowspan='2'>D&D<br>icon</th>
+                <th class="name" rowspan='2'>Name</th>
+                <th class="" colspan='3'>Beacon ID</th>
+                <th class="note" rowspan='2'>Note</th>
+            </tr>
+            <tr class="title-2">
+                <td class="language" style="width: 400px;">UUID</td>
+                <td class="language" style="width: 100px;">Major</td>
+                <td class="language" style="width: 100px;">Minor</td>
+            </tr>
+        </table>
+        <div class="display-quantity">
+            <div class="display-text">表示件数</div>
+            <select name="" id="">
+                <option value="">50</option>
+                <option value="">100</option>
+                <option value="">200</option>
+                <option value="">300</option>
+            </select>
+        </div>
+    </div>
+</div>
 <script>
     mapconfig = new mapconfig();
     var indoormap;
@@ -33,6 +200,7 @@
     const uidlist = $.cookie("uidlist").split(",");
     const pnamelist = $.cookie("pnamelist").split(",");
     const flooralt = $.cookie("flooralt").split(";");
+    const floornumber = $.cookie("floornumber");
     var leafmarker = [];
     var uidlistforajax;
     var targetmap;
@@ -47,6 +215,7 @@
     var realkeypoint1y;
     var realkeypoint2x;
     var realkeypoint2y;
+    var beaconmarker = null;
 
 
     var timedraw = function (fn, millisec) {
@@ -177,10 +346,93 @@
             }
         }
 
+        var beaconSetting = $.cookie('beaconsetting');
+        if (beaconSetting != 'true') {
+            timedraw(showallposition, 3000);
+        } else {
+            document.getElementById("beacondataform").style.display = 'block';
+            var beaconBox = document.querySelector('.beacon-point')
+            var beaconTitle = beaconBox.querySelector('.beacon-title')
+            var x = 0
+            var y = 0
+            var l = 0
+            var t = 0
+            var isDown = false
+            //clickの時
+            beaconTitle.onmousedown = function (e) {
+                x = e.clientX
+                y = e.clientY
+                l = beaconBox.offsetLeft
+                t = beaconBox.offsetTop
+                isDown = true
+                beaconBox.style.cursor = 'move'
+            }
+            //モバイルの時
+            window.onmousemove = function (e) {
+                if (isDown == false) {
+                    return
+                }
+                var nx = e.clientX
+                var ny = e.clientY
+                //计算移动后的左偏移量和顶部的偏移量
+                var nl = nx - (x - l)
+                var nt = ny - (y - t)
+                beaconBox.style.left = nl + 'px'
+                beaconBox.style.top = nt + 'px'
+            }
+            //放す問
+            beaconTitle.onmouseup = function () {
+                isDown = false
+                beaconBox.style.cursor = 'default'
+            }
+            getBeacon();
 
-        timedraw(showallposition, 3000);
+        }
     };
     init();
+
+    //getBeaconData
+    function getBeacon() {
+
+        document.querySelectorAll('.removeflag').forEach(function (item) {
+            item.remove()
+        })
+        $.ajax({
+            type: 'GET',
+            url: mapconfig.getAllBeacondetail(),
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var temp = [];
+                    temp[0] = data[i].b_id;
+                    temp[1] = './icon/Positioning.png'
+                    temp[2] = data[i].b_name;
+                    temp[3] = data[i].b_uuid;
+                    temp[4] = data[i].b_major;
+                    temp[5] = data[i].b_minor;
+                    temp[6] = data[i].b_note;
+
+
+                    var tr = `<td>${temp[0]}</td>
+                        <td class="imgs">
+                        <img src="${temp[1]}" onclick='latlngedit(${temp[0]})'/>
+                        </td>
+                        <td>${temp[2]}</td>
+                        <td>${temp[3]}</td>
+                        <td>${temp[4]}</td>
+                        <td>${temp[5]}</td>
+                        <td class="note-text">${temp[6]}</td>`
+
+                    $("#beacondetailtb").append('<tr class="text removeflag">' + tr + '</tr>');
+                }
+                // edit()
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+    }
 
 
     const logicdraw = function (x, y) {
@@ -195,6 +447,110 @@
                 return latlng;
             }
         }
+
+    }
+
+
+    //获取当前点击的第几个icon
+    function latlngedit(b_id) {
+        $.ajax({
+            type: 'GET',
+            url: mapconfig.getBeaconByid() + b_id,
+            dataType: 'json',
+            success: function (data) {
+                if (beaconmarker != null) {
+                    beaconmarker.remove();
+                    beaconmarker = null;
+                }
+                if ((data[0].b_lat != 0 && data[0].b_lon != 0) && (data[0].b_lat != null && data[0].b_lon != null)) {
+                    beaconmarker = L.marker([Number(data[0].b_lat), Number(data[0].b_lon)],{draggable: true});
+                    beaconmarker.addTo(indoormap).on('click',function (e) {
+                        var result = window.confirm("この位置でBeacon設定ですか？");
+                        if (result == true) {
+                            $.ajax({
+                                type: 'POST',
+                                url: mapconfig.updateBeaconPosition(),
+                                contentType: "application/json",
+                                dataType: "text",
+                                data: JSON.stringify({
+                                    "data": {
+                                        "b_id": b_id,
+                                        "b_lon": e.latlng.lng,
+                                        "b_lat": e.latlng.lat,
+                                        "b_alt": flooralt[0],
+                                        "b_floor": floornumber
+                                    }
+                                }),
+                                success: function (data) {
+                                    if (JSON.parse(data).status == 'success') {
+                                        alert("Beacon Position updata success!");
+                                        beaconmarker.remove();
+                                        beaconmarker = null;
+                                        getBeacon();
+                                    } else {
+                                        alert("Beacon Position updata failed!");
+                                    }
+                                },
+                                error: function () {
+                                    alert('Please check your network,if it is still not work.Please look admin for help!');
+                                }
+                            })
+                        }
+                    });
+                } else {
+                    alert("Beacon position is not exist!Add now");
+                    indoormap.on('dblclick', function(e) {
+                        if (beaconmarker != null) {
+                            beaconmarker.remove();
+                            beaconmarker = null;
+                        }
+
+                        beaconmarker = L.marker(e.latlng,{draggable: true});
+                        beaconmarker.addTo(indoormap).on('click',function (e) {
+                            var result = window.confirm("この位置でBeacon設定ですか？");
+                            if (result == true) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: mapconfig.updateBeaconPosition(),
+                                    contentType: "application/json",
+                                    dataType: "text",
+                                    data: JSON.stringify({
+                                        "data": {
+                                            "b_id": b_id,
+                                            "b_lon": e.latlng.lng,
+                                            "b_lat": e.latlng.lat,
+                                            "b_alt": flooralt[0],
+                                            "b_floor": floornumber
+                                        }
+                                    }),
+                                    success: function (data) {
+                                        if (JSON.parse(data).status == 'success') {
+                                            alert("Beacon Position updata success!");
+                                            indoormap.off('dblclick');
+                                            beaconmarker.remove();
+                                            beaconmarker = null;
+                                            getBeacon();
+                                        } else {
+                                            alert("Beacon Position updata failed!");
+                                        }
+                                    },
+                                    error: function () {
+                                        alert('Please check your network,if it is still not work.Please look admin for help!');
+                                    }
+                                })
+                            }
+                        });
+
+                    });
+
+                }
+            }
+            ,
+            error: function (err) {
+                console.log(err)
+            }
+
+        })
 
     }
 
