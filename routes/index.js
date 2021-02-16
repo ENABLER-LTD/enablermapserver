@@ -31,6 +31,9 @@ router.get('/updateBeacon/:beaconid', function (req, res, next) {
     res.render('updatebeacon');
 });
 
+router.get('/arealist', function (req, res, next) {
+    res.render('area');
+});
 
 
 router.get('/addsetting', function (req, res, next) {

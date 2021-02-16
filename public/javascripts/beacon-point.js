@@ -39,6 +39,7 @@ beaconTitle.onmouseup = function () {
 function displayDom(ele) {
     if (ele.style.display == 'none') {
         ele.style.display = 'block'
+        $.cookie('selectbid', 'null');
         getBeacon()
         $.cookie('beaconsetting', 'true');
     } else {
@@ -77,7 +78,7 @@ function getBeacon() {
                 temp[6] = data[i].b_note;
 
 
-                var tr = `<td>${temp[0]}</td>
+                var tr = `<td>${i+1}</td>
                         <td class="imgs">
                         <img src="${temp[1]}" onclick='latlngedit(${temp[0]})'/>
                         </td>
@@ -101,6 +102,7 @@ var beaconmarker = null;
 
 //获取当前点击的第几个icon
 function latlngedit(b_id) {
+    $.cookie('selectbid', b_id);
     $.ajax({
         type: 'GET',
         url: mapconfig.getBeaconByid() + b_id,

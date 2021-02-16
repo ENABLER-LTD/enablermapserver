@@ -1,0 +1,143 @@
+*{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+html,body,#user-list-box{
+    width: 100%;
+    position: relative;
+}
+.form-box{
+    padding: 0px 20px;
+}
+.area{
+    width: 100%;
+    box-shadow: 0.1px 0px 0px 2px rgba(134, 134, 134, 0.1);
+    position: relative;
+    margin: 20px auto;
+    border-radius: 5px;
+    /* border: 1px solid #cccccc; */
+    position: relative;
+}
+.navigation-box{
+    height: 38px;
+    position: relative;
+    background-color: #007bff;
+    padding: 0px 20px;
+    border-radius: 3px 3px 0 0;
+}
+.beacon-list-bnt{
+    height: 38px;
+    float: left;
+}
+.beacon-list-bnt img{
+    height: 24px;
+    float: left;
+    position: absolute;
+    top: 50%;
+    margin-top: -12px;
+}
+.beacon-list-bnt h3{
+    line-height: 38px;
+    margin-left: 34px;
+    margin-bottom: 0px !important;
+    font-size: 18px;
+    color: #fff;
+}
+.return-bnt{
+    position: absolute;
+    right: 20px;
+}
+.return-bnt img{
+    height: 20px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.title-1 .num,
+.title-1 .edit {
+    width: 100px;
+}
+
+.title-1 .name {
+    width: 200px;
+}
+.title-1 .area-set{
+    width: 300px;
+}
+.title-1 .floor,
+.title-1 .status {
+    width: 150px;
+}
+
+.title-1 .contract-service {
+    width: 800px;
+}
+
+.title-1 .note {
+    width: 300px;
+}
+
+table tr th,
+table tr td {
+    border: 1px solid #ccc;
+    padding: 10px 0px;
+}
+
+.title-2 .service {
+    padding: 0px 20px;
+}
+.not-text {
+    text-align: left !important;
+    padding: 1px 10px;
+}
+input {
+    width: 20px;
+    height: 20px;
+}
+.append-btn {
+    position: absolute;
+    margin-top: 20px;
+    /* float: left; */
+}
+.display-quantity {
+    position: absolute;
+    height: 38px;
+    left: 150px;
+    margin-top: 20px;
+}
+.display-text {
+    float: left;
+    line-height: 38px;
+    margin-right: 20px;
+}
+.display-quantity select {
+    padding: 4px 20px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.append-btn a{
+    color: #fff !important;
+    text-decoration: none;
+}
+.text .active{
+    /* outline: none;
+    appearance: none;
+    -webkit-appearance: none; */
+}
+.floor-plan{
+    margin: 0px 10px;
+}
+
+table img{
+    width: 100px;
+}
+.note-text{
+    text-align: left !important;
+    padding: 1px 10px;
+}

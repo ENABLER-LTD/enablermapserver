@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area管理</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="/javascripts/configsetting.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/area.css">
+</head>
+
+<body>
+<div class="form-box">
+    <div class="area">
+        <div class="navigation-box">
+            <div class="beacon-list-bnt">
+                <img src="icon/Settings.png" alt="">
+                <h3>Area管理</h3>
+            </div>
+            <div class="return-bnt">
+                <a href="./mainmap">
+                    <button type="button" class="btn btn-primary">
+                        <img src="icon/return.png" alt="">
+                    </button>
+                </a>
+            </div>
+        </div>
+        <table id="target-list">
+            <tr class="title-1">
+                <th class="num" rowspan=''>No.</th>
+                <th class="edit" rowspan=''>Edit</th>
+                <th class="name" rowspan=''>Area Name(JP)</th>
+                <th class="name" rowspan=''>Area Name(ENG)</th>
+                <th class="area-set" colspan=''>Area Definition</th>
+                <th class="note">Note</th>
+            </tr>
+        </table>
+        <div class="append-btn">
+            <button type="button" class="btn btn-primary">
+                <a href="./addArea">Area追加</a>
+            </button>
+        </div>
+        <div class="display-quantity">
+            <div class="display-text">表示件数</div>
+            <select name="" id="">
+                <option value="">50</option>
+                <option value="">100</option>
+                <option value="">200</option>
+                <option value="">300</option>
+            </select>
+        </div>
+    </div>
+</div>
+<script>
+    mapconfig = new mapconfig();
+
+    var areadetail = [];
+    $.ajax({
+        type: 'GET',
+        async: false,
+        url: mapconfig.getAllAreadetail(),
+        success: function (data) {
+            areadetail = data;
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+
+    for (let i = 0; i < areadetail.length; i++) {
+        var temp = [];
+        temp[0] = areadetail[i].area_id;
+        temp[1] = areadetail[i].area_name;
+        temp[2] = areadetail[i].area_nameeng;
+        temp[3] = areadetail[i].area_type;
+        temp[4] = areadetail[i].area_note;
+        var tr = `<td>${i+1}</td>
+        <td>
+            <a href="./updateArea/${temp[0]}">
+                編集
+            </a>
+        </td>
+        <td>${temp[1]}</td>
+        <td>${temp[2]}</td>
+        <td>${temp[3]}</td>
+        <td>${temp[4]}</td>
+
+`
+
+        $("#target-list").append('<tr>' + tr + '</tr>');
+    }
+</script>
+</body>
+
+</html>
