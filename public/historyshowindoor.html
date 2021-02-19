@@ -204,10 +204,14 @@
                                 }
                             }
                         }
-                        file_data.put(uid, resultArr);
-                        drawlocation.put(uid, 0);
-                        drawTarget.push(uid);
-                        alert("uid:" + uid + "load log file success!")
+                        if (resultArr.length != 0) {
+                            file_data.put(uid, resultArr);
+                            drawlocation.put(uid, 0);
+                            drawTarget.push(uid);
+                            alert("uid:" + uid + "load log file success!")
+                        } else {
+                            alert("uid:" + uid + "のログ記録は存在しない")
+                        }
                     } else {
                         alert("uid:" + uid + " のログ記録は存在しない")
 

@@ -190,4 +190,24 @@ class mapconfig {
     getAllAreadetail(){
         return this.beaconurl + 'getAllAreadetail'
     }
+
+    getAreaName(){
+        return this.beaconurl + 'getAreaName'
+    }
+
+    addareadetail(){
+        return this.beaconurl + 'addareadetail'
+    }
+
+    getareadetail(){
+        return this.beaconurl + 'getareadetail/'
+    }
+
+    deletearea(){
+        return this.beaconurl + 'deletearea/'
+    }
+
+    updateareadetail(){
+        return this.beaconurl + 'updateareadetail'
+    }
 }

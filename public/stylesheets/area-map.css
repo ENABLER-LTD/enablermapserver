@@ -1,0 +1,128 @@
+* {
+    padding: 0px;
+    margin: 0;
+    list-style: none;
+}
+
+html, body{
+    width: 100%;
+    height: 100%;
+}
+.map-box{
+    width: 99%;
+    height: 98%;
+    position: relative;
+    margin: 0 auto;
+    top: 50%;
+    transform: translateY(-50%);
+    overflow: hidden;
+}
+.map-box #map{
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+}
+.area-edit{
+    position: absolute;
+    z-index: 999;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #ffffff;
+}
+.navigation-box{
+    height: 38px;
+    position: relative;
+    background-color: #007bff;
+    padding: 0px 20px;
+    border-radius: 3px 3px 0 0;
+}
+.title{
+    height: 38px;
+    float: left;
+}
+.title img{
+    height: 24px;
+    float: left;
+    position: absolute;
+    top: 50%;
+    margin-top: -12px;
+}
+.title h3{
+    line-height: 38px;
+    margin-left: 34px;
+    margin-bottom: 0px !important;
+    font-size: 18px;
+    color: #fff;
+}
+.return-bnt{
+    position: absolute;
+    right: 20px;
+}
+.return-bnt img{
+    height: 20px;
+}
+.edit {
+    position: relative;
+    padding: 20px;
+    height: 450px;
+    overflow-y:scroll;
+}
+.edit .form-control{
+    width: 300px;
+}
+.area-no,.area-definition,.area-name,.note{
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+}
+.name-title{
+    width: 200px;
+    padding: .375rem 0;
+    float: left;
+}
+.area-definition select{
+    width: 35%;
+}
+.area-name{
+    display: flex;
+}
+.language,.point,.point ul li{
+    display: flex;
+}
+.point{
+    width: 100%;
+    position: relative;
+}
+.point ul{
+    margin-bottom: 1px !important;
+}
+.point ul li{
+    margin-bottom: 20px;
+}
+#jp,.lon{
+    margin-right: 20px;
+}
+.area-note{
+    width: 100%;
+    position: relative;
+    margin-bottom: 20px;
+}
+textarea{
+    outline:none;
+    resize:none;
+    padding: 5px 14px;
+    border-color: #ced4da;
+    border-radius: 5px;
+}
+.footer-btn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.footer-btn button{
+    padding: 5px 10px;
+}
+.footer-btn #area-submit-btn{
+    margin-right: 20px;
+}

@@ -44,6 +44,10 @@ function displayDom(ele) {
         $.cookie('beaconsetting', 'true');
     } else {
         ele.style.display = 'none'
+        if (beaconmarker != null) {
+            beaconmarker.setMap(null);
+            beaconmarker = null;
+        }
         $.cookie('beaconsetting', 'false');
     }
 }

@@ -14,6 +14,11 @@ router.get('/login', function (req, res, next) {
     res.render('login');
 });
 
+
+router.get('/addarea', function (req, res, next) {
+    res.render('addarea');
+});
+
 //
 router.get('/updataservicesetting/:companycode', function (req, res, next) {
     res.render('updataservicesetting');
@@ -35,10 +40,15 @@ router.get('/arealist', function (req, res, next) {
     res.render('area');
 });
 
+router.get('/editarea/:areaid', function (req, res, next) {
+    res.render('editarea');
+});
+
 
 router.get('/addsetting', function (req, res, next) {
     res.render('officesetting');
 });
+
 
 router.get('/updatauserset/:pnumber', function (req, res, next) {
     res.render('updatauserset');

@@ -42,7 +42,7 @@
         </table>
         <div class="append-btn">
             <button type="button" class="btn btn-primary">
-                <a href="./addArea">Area追加</a>
+                <a href="./addarea">Area追加</a>
             </button>
         </div>
         <div class="display-quantity">
@@ -72,16 +72,32 @@
         }
     })
 
+    const areadic = {};
+    $.ajax({
+        type: 'GET',
+        async: false,
+        url: mapconfig.getAreaName(),
+        success: function (data) {
+            for (let i = 0; i < data.length; i++) {
+                areadic[data[i].area_type] = data[i].area_name;
+            }
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+
+
     for (let i = 0; i < areadetail.length; i++) {
         var temp = [];
         temp[0] = areadetail[i].area_id;
         temp[1] = areadetail[i].area_name;
         temp[2] = areadetail[i].area_nameeng;
-        temp[3] = areadetail[i].area_type;
+        temp[3] = areadic[areadetail[i].area_type];
         temp[4] = areadetail[i].area_note;
-        var tr = `<td>${i+1}</td>
+        var tr = `<td>${i + 1}</td>
         <td>
-            <a href="./updateArea/${temp[0]}">
+            <a href="./editarea/${temp[0]}">
                 編集
             </a>
         </td>
