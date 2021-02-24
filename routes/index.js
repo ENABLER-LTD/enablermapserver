@@ -14,6 +14,17 @@ router.get('/login', function (req, res, next) {
     res.render('login');
 });
 
+router.get('/floorselect', function (req, res, next) {
+    res.render('floorselect');
+});
+
+router.get('/indoormaparea', function (req, res, next) {
+    res.render('indoormaparea');
+});
+
+router.get('/editindoorarea/:areaid', function (req, res, next) {
+    res.render('editindoorarea');
+});
 
 router.get('/addarea', function (req, res, next) {
     res.render('addarea');

@@ -199,6 +199,10 @@ class mapconfig {
         return this.beaconurl + 'addareadetail'
     }
 
+    addindoorareadetail(){
+        return this.beaconurl + 'addindoorareadetail'
+    }
+
     getareadetail(){
         return this.beaconurl + 'getareadetail/'
     }

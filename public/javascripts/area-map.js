@@ -6,6 +6,7 @@ var shape;
 var latlngString = "";
 var lat;
 var lng;
+const companycode = $.cookie("enabermap.uid").substring(0, 5);
 
 
 $.ajax({
@@ -24,6 +25,50 @@ $.ajax({
     }
 })
 
+//屋内地図Map上に書く
+var getmapdetail = function (companycode) {
+    $.ajax({
+        type: 'GET',
+        url: mapconfig.getindoordetail() + companycode,
+        success: function (data) {
+            if (data != null) {
+                indoordetail = data;
+                for (let i = 0, len = indoordetail.length; i < len; i++) {
+                    var templist = indoordetail[i].position.split("|");
+                    var areaCoords = [];
+                    for (let j = 0, len = templist.length; j < len; j++) {
+                        var tempstring = {
+                            lat: Number(templist[j].split(",")[0]),
+                            lng: Number(templist[j].split(",")[1])
+                        }
+                        areaCoords.push(tempstring);
+                    }
+                    var areaTriangle = new google.maps.Polygon({
+                        paths: areaCoords,
+                        strokeColor: "#FF0000",
+                        strokeOpacity: 0.8,
+                        strokeWeight: 3,
+                        fillColor: "#FF0000",
+                        fillOpacity: 0.35,
+                    });
+                    areaTriangle.setMap(map);
+                    areaTriangle.addListener("click", function () {
+                        showindoormap(indoordetail[i].svgfile, indoordetail[i].keypoint);
+                    });
+                }
+            }
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+};
+
+var showindoormap = function (filename, keypoint) {
+    $.cookie('filename', filename);
+    $.cookie('keypoints', keypoint);
+    window.open(mapconfig.getbaseurl() + 'floorselect');
+};
 
 var test = null;
 var init = function () {
@@ -31,6 +76,8 @@ var init = function () {
         center: Tokyo,
         zoom: 10,
     });
+    getmapdetail(companycode);
+
     //画图
     const drawingManager = new google.maps.drawing.DrawingManager({
 
@@ -80,7 +127,7 @@ var init = function () {
         shape = null;
     })
 }
-
+init();
 
 var editBox = document.querySelector('.area-edit')
 var title = editBox.querySelector('.navigation-box')

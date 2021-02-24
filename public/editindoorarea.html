@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnablerMapIndoorDemo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+    <script src="/javascripts/configsetting.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"
+            integrity="sha512-ozq8xQKq6urvuU6jNgkfqAmT7jKN2XumbrX1JiB3TnF7tI48DPI4Gy1GXKD/V3EExgAs1V+pRO7vwtS1LHg0Gw=="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw-src.css"
+          integrity="sha512-vJfMKRRm4c4UupyPwGUZI8U651mSzbmmPgR3sdE3LcwBPsdGeARvUM5EcSTg34DK8YIRiIo+oJwNfZPMKEQyug=="
+          crossorigin="anonymous"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw-src.js"
+            integrity="sha512-czICF/Crp0B7QB13iQZG9bYUpd/P1Ona1NeZN52gYsoVFXIpakDmdOUepMCHCMBIBd9Ei5Mlg8Quy4e504IT5A=="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"
+          integrity="sha512-gc3xjCmIy673V6MyOAZhIW93xhM9ei1I+gLbmFjUHIjocENRsLX/QUE1htk5q1XV2D/iie/VQ8DXI6Vu8bexvQ=="
+          crossorigin="anonymous"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw-src.map"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        * {
+            padding: 0px;
+            margin: 0;
+            list-style: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .map-box {
+            width: 99%;
+            height: 98%;
+            position: relative;
+            margin: 0 auto;
+            top: 50%;
+            transform: translateY(-50%);
+            overflow: hidden;
+        }
+
+        .map-box #map {
+            width: 100%;
+            height: 100%;
+            z-index: 99;
+        }
+
+        .area-edit {
+            position: absolute;
+            z-index: 999;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+        }
+
+        .navigation-box {
+            height: 38px;
+            position: relative;
+            background-color: #007bff;
+            padding: 0px 20px;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .title {
+            height: 38px;
+            float: left;
+        }
+
+        .title img {
+            height: 24px;
+            float: left;
+            position: absolute;
+            top: 50%;
+            margin-top: -12px;
+        }
+
+        .title h3 {
+            line-height: 38px;
+            margin-left: 34px;
+            margin-bottom: 0px !important;
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .return-bnt {
+            position: absolute;
+            right: 20px;
+        }
+
+        .return-bnt img {
+            height: 20px;
+        }
+
+        .edit {
+            position: relative;
+            padding: 20px;
+            height: 450px;
+            overflow-y: scroll;
+        }
+
+        .edit .form-control {
+            width: 300px;
+        }
+
+        .area-no, .area-definition, .area-name, .note {
+            width: 100%;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .name-title {
+            width: 200px;
+            padding: .375rem 0;
+            float: left;
+        }
+
+        .area-definition select {
+            width: 35%;
+        }
+
+        .area-name {
+            display: flex;
+        }
+
+        .language, .point, .point ul li {
+            display: flex;
+        }
+
+        .point {
+            width: 100%;
+            position: relative;
+        }
+
+        .point ul {
+            margin-bottom: 1px !important;
+        }
+
+        .point ul li {
+            margin-bottom: 20px;
+        }
+
+        #jp, .lon {
+            margin-right: 20px;
+        }
+
+        .area-note {
+            width: 100%;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            outline: none;
+            resize: none;
+            padding: 5px 14px;
+            border-color: #ced4da;
+            border-radius: 5px;
+        }
+
+        .footer-btn {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .footer-btn button {
+            padding: 5px 10px;
+        }
+
+        .footer-btn #area-submit-btn {
+            margin-right: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="map-box">
+    <div class="area-edit">
+        <div class="navigation-box">
+            <div class="title">
+                <img src="/icon/Settings.png" alt="">
+                <h3>Area設定</h3>
+            </div>
+            <div class="return-bnt">
+                <a href="../arealist">
+                    <button type="button" class="btn btn-primary">
+                        <img src="/icon/return.png" alt="">
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="edit">
+            <div class="area-definition">
+                <div class="name-title">エリア定義</div>
+                <select name="" id="areaDefinition" class="form-control">
+
+                </select>
+            </div>
+            <div class="area-name">
+                <div class="name-title">エリア名（日/英）</div>
+                <div class="language">
+                    <input id="jp" class="form-control" type="text" placeholder="日本語">
+                    <input id="en" class="form-control" type="text" placeholder="英語">
+                </div>
+            </div>
+            <div class="point">
+                <div class="name-title">座標</div>
+                <ul>
+                    <li>
+                        <input id="area_lng" class="form-control lon" type="text" placeholder="Lon" readonly>
+                        <input id="area_lat" class="form-control lat" type="text" placeholder="Lat" readonly>
+                    </li>
+                </ul>
+            </div>
+            <div class="area-note">
+                <div class="name-title">Note</div>
+                <textarea name="" id="areaNote" cols="80" rows="4" class=""></textarea>
+            </div>
+            <div class="footer-btn">
+                <button type="button" class="btn btn-primary" id="area-submit-btn">UPDATE</button>
+                <button type="button" class="btn btn-primary" id="redraw">Redraw</button>
+                <button type="button" class="btn btn-danger" id="deletebtn">Delete</button>
+            </div>
+        </div>
+    </div>
+    <div id="map"></div>
+</div>
+<script>
+    mapconfig = new mapconfig();
+    var indoormap;
+    const companycode = $.cookie("enabermap.uid").substring(0, 5);
+    var url = window.location.href.toString();
+    var index = url.lastIndexOf("\/");
+    var area_id = url.substring(index + 1, url.length);
+    var targetmap;
+    var targetimage = new Image();
+    var imagescale;
+    var imgkeypoint1x;
+    var imgkeypoint1y;
+    var imgkeypoint2x;
+    var imgkeypoint2y;
+    var realkeypoint1x;
+    var realkeypoint1y;
+    var realkeypoint2x;
+    var realkeypoint2y;
+    var createlayer;
+    const areadic = {};
+    var latlngString = "";
+    var svgfilename = null;
+    var keypoint;
+    var polygon = null;
+
+    $.ajax({
+        type: 'GET',
+        async: false,
+        url: mapconfig.getAreaName(),
+        success: function (data) {
+            for (let i = 0; i < data.length; i++) {
+                areadic[data[i].area_type] = data[i].area_name;
+                var temp = "<option value='" + data[i].area_type + "'>" + data[i].area_name + "</option>";
+                $("#areaDefinition").append(temp);
+            }
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+
+    $.ajax({
+        type: 'GET',
+        async: false,
+        url: mapconfig.getareadetail() + area_id,
+        success: function (data) {
+            document.getElementById('jp').value = data[0].area_name;
+            document.getElementById('en').value = data[0].area_nameeng;
+            document.getElementById('areaDefinition').value = data[0].area_type;
+            latlngString = data[0].area_latlng;
+            document.getElementById('areaNote').value = data[0].area_note;
+            document.getElementById('area_lat').value = data[0].area_lat;
+            document.getElementById('area_lng').value = data[0].area_lng;
+            svgfilename = data[0].area_svgfile;
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+
+    $.ajax({
+        type: 'GET',
+        async: false,
+        url: mapconfig.getdetailbyfilename() + svgfilename,
+        success: function (data) {
+            keypoint = data[0].keypoint;
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+
+    const init = function () {
+        var keypoints = keypoint.split(",");
+
+        var imageUrl = mapconfig.geturl() + svgfilename,
+            imageBounds = [
+                [Number(keypoints[0]), Number(keypoints[1])],
+                [Number(keypoints[2]), Number(keypoints[3])]
+            ];
+
+        targetimage.src = imageUrl;
+
+
+        targetimage.onload = function () {
+            var width = targetimage.width;
+            var height = targetimage.height;
+            imagescale = height / width;
+            indoormap = L.map('map', {
+                center: [40.75, -74.2],
+                zoom: 10
+            });
+
+            //showmessage
+            L.Control.showbox = L.Control.extend({
+
+                onAdd: function (map) {
+                    var divbox = L.DomUtil.create('div');
+                    divbox.id = "info";
+                    return divbox;
+                },
+
+            });
+            L.control.showbox = function (opts) {
+                return new L.Control.showbox(opts);
+            }
+
+            L.control.showbox({position: 'bottomleft'}).addTo(indoormap);
+
+            indoormap.on('mousemove', function (e) {
+                document.getElementById('info').innerHTML = JSON.stringify(e.latlng);
+            });
+
+
+            targetmap = L.imageOverlay(targetimage, imageBounds, {className: "targetmapclass"}).addTo(indoormap);
+            indoormap.fitBounds(imageBounds);
+            indoormap.setZoom(22);
+
+            var latlngs = [];
+            var pointlist = latlngString.split("|");
+            for (let i = 0; i < pointlist.length; i++) {
+                var temppoint = [Number(pointlist[i].split(";")[0]), Number(pointlist[i].split(";")[1])];
+                latlngs.push(temppoint);
+            }
+            polygon = new L.polygon(latlngs, {color: 'red'}).addTo(indoormap);
+
+        }
+
+        document.getElementById('redraw').addEventListener('click', function () {
+            if (polygon == null) {
+                document.getElementById('area_lat').value = "";
+                document.getElementById('area_lng').value = "";
+                latlngString = "";
+                indoormap.removeLayer(createlayer);
+                createlayer = null;
+            } else {
+                document.getElementById('area_lat').value = "";
+                document.getElementById('area_lng').value = "";
+                latlngString = "";
+                indoormap.removeLayer(polygon);
+                polygon = null;
+                var drawnItems = new L.FeatureGroup();
+                indoormap.addLayer(drawnItems);
+                var drawControl = new L.Control.Draw({
+                    draw: {
+                        polyline: false,
+                        marker: false,
+                        rectangle: false,
+                        circle: false,
+                        circlemarker: false,
+                        polygon: {
+                            allowIntersection: false,
+                            showArea: true
+                        }
+                    },
+                    edit: {
+                        featureGroup: drawnItems,
+                        poly: {
+                            allowIntersection: false
+                        }
+                    }
+
+                });
+                indoormap.addControl(drawControl);
+
+                indoormap.on(L.Draw.Event.CREATED, function (e) {
+                    createlayer = e.layer;
+                    document.getElementById('area_lat').value = createlayer.getLatLngs()[0][0].lat;
+                    document.getElementById('area_lng').value = createlayer.getLatLngs()[0][0].lng;
+                    for (let i = 0; i < createlayer.getLatLngs()[0].length; i++) {
+                        if (i == 0) {
+                            var tempstring = createlayer.getLatLngs()[0][i].lat + ";" + createlayer.getLatLngs()[0][i].lng;
+                            latlngString = latlngString + tempstring;
+                        } else {
+                            var tempstring = "|" + createlayer.getLatLngs()[0][i].lat + ";" + createlayer.getLatLngs()[0][i].lng;
+                            latlngString = latlngString + tempstring;
+                        }
+                    }
+                    drawnItems.addLayer(createlayer);
+                });
+            }
+
+
+        })
+
+    }
+
+
+    init();
+
+
+    const logicdraw = function (x, y) {
+
+        if (x >= realkeypoint1x && x <= realkeypoint2x) {
+            var scalex = (x - realkeypoint1x) / (realkeypoint2x - realkeypoint1x);
+            if (y >= realkeypoint1y && y <= realkeypoint2y) {
+                var scaley = (x - realkeypoint1y) / (realkeypoint2y - realkeypoint1y);
+                var drawx = scalex * (imgkeypoint2x - imgkeypoint1x) + imgkeypoint1x;
+                var drawy = scaley * (imgkeypoint2y - imgkeypoint1y) + imgkeypoint1y;
+                var latlng = indoormap.containerPointToLatLng([Number(drawx), Number(drawy)]);
+                return latlng;
+            }
+        }
+
+    }
+
+    var editBox = document.querySelector('.area-edit')
+    var title = editBox.querySelector('.navigation-box')
+
+    var x = 0
+    var y = 0
+    var l = 0
+    var t = 0
+    var isDown = false
+    //clickの時
+    title.onmousedown = function (e) {
+        x = e.clientX
+        y = e.clientY
+        l = editBox.offsetLeft
+        t = editBox.offsetTop
+        isDown = true
+        editBox.style.cursor = 'move'
+    }
+    //モバイルの時
+    window.onmousemove = function (e) {
+        if (isDown == false) {
+            return
+        }
+        var nx = e.clientX
+        var ny = e.clientY
+        //计算移动后的左偏移量和顶部的偏移量
+        var nl = nx - (x - l)
+        var nt = ny - (y - t)
+        editBox.style.left = nl + 'px'
+        editBox.style.top = nt + 'px'
+    }
+    //放す問
+    title.onmouseup = function () {
+        isDown = false
+        editBox.style.cursor = 'default'
+    }
+
+    document.getElementById('deletebtn').addEventListener('click', function () {
+        $.ajax({
+            type: 'POST',
+            url: mapconfig.deletearea(),
+            contentType: "application/json",
+            dataType: "text",
+            data: JSON.stringify({
+                "data": {
+                    "area_id": area_id
+                }
+            }),
+            success: function (data) {
+                if (JSON.parse(data).status == 'success') {
+                    alert("delete area success!");
+                    window.location.href = '../arealist';
+                } else {
+                    alert("delete area failed!");
+                }
+            },
+            error: function () {
+                alert('Please check your network,if it is still not work.Please look admin for help!');
+            }
+        })
+    })
+
+    document.getElementById('area-submit-btn').addEventListener('click', function () {
+        if (document.getElementById('jp').value != null && document.getElementById('en').value != null) {
+            $.ajax({
+                type: 'POST',
+                url: mapconfig.updateareadetail(),
+                contentType: "application/json",
+                dataType: "text",
+                data: JSON.stringify({
+                    "data": {
+                        "area_id": area_id,
+                        "area_name": document.getElementById('jp').value,
+                        "area_nameeng": document.getElementById('en').value,
+                        "area_type": document.getElementById('areaDefinition').value,
+                        "area_latlng": latlngString,
+                        "area_note": document.getElementById('areaNote').value,
+                        "area_lat": document.getElementById('area_lat').value,
+                        "area_lng": document.getElementById('area_lng').value
+                    }
+                }),
+                success: function (data) {
+                    if (JSON.parse(data).status == 'success') {
+                        alert("update area success!");
+                        window.location.href = '../arealist';
+                    } else {
+                        alert("update area failed!");
+                    }
+                },
+                error: function () {
+                    alert('Please check your network,if it is still not work.Please look admin for help!');
+                }
+            })
+        }
+
+    })
+
+</script>
+</body>
+</html>
+

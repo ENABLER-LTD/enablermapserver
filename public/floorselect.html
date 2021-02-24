@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IndoorFloor</title>
+<style type="text/css">
+    html, body {
+        margin: 0px;
+        height: 100%;
+        width: 100%
+    }
+
+    .container {
+        width: 100%;
+        height: 100%
+    }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maptalks/dist/maptalks.css">
+<script src="/javascripts/configsetting.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/maptalks/dist/maptalks.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<body>
+
+<div id="map" class="container"></div>
+
+<script>
+    mapconfig = new mapconfig();
+
+    var floorinfo;
+    var map;
+    var filename = $.cookie("filename");
+
+
+    $.ajax({
+        type: 'GET',
+        url: mapconfig.getfloordetail() + filename,
+        async: false,
+        success: function (data) {
+            floorinfo = data;
+        },
+        error: function (e) {
+            console.log(e);
+        }
+    })
+
+    var center = floorinfo[0].position.split("|")[0].split(",");
+
+    map = new maptalks.Map('map', {
+        center: [Number(center[1]), Number(center[0])],
+        zoom: 14,
+        pitch: 56,
+        baseLayer: new maptalks.TileLayer('base', {
+            urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+            subdomains: ['a', 'b', 'c', 'd'],
+            attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
+        })
+    });
+    var layer;
+    var target = [];
+    for (let i = 0; i < floorinfo.length; i++) {
+        var position = [];
+        var point = floorinfo[0].position.split("|");
+        for (let j = 0; j < point.length; j++) {
+            var temp = [Number(point[j].split(",")[1]), Number(point[j].split(",")[0])];
+            position.push(temp);
+        }
+
+        var polygon = new maptalks.Polygon([
+            position
+        ], {
+            symbol: {
+                lineColor: '#34495e',
+                lineWidth: 1,
+                polygonFill: '#34495e',
+                polygonOpacity: 0.5
+            },
+            properties: {
+                altitude: Number(floorinfo[i].alt),
+            }
+        }).on('click', function () {
+            $.cookie('filename', floorinfo[i].svgfile);
+            $.cookie('keypoints', floorinfo[i].keypoint);
+            $.cookie('floornumber', floorinfo[i].floor);
+            if (i == floorinfo.length - 1) {
+                $.cookie('flooralt', floorinfo[i].alt + ";" + '999999');
+            } else {
+                $.cookie('flooralt', floorinfo[i].alt + ";" + floorinfo[i + 1].alt);
+            }
+            window.open(mapconfig.getbaseurl() + 'indoormaparea');
+        });
+        target.push(polygon);
+
+    }
+    var layer = new maptalks.VectorLayer('vector', target, {enableAltitude: true}).addTo(map);
+
+
+</script>
+</body>
+</html>

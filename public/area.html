@@ -90,14 +90,21 @@
 
     for (let i = 0; i < areadetail.length; i++) {
         var temp = [];
+        var hrefstring=null;
         temp[0] = areadetail[i].area_id;
         temp[1] = areadetail[i].area_name;
         temp[2] = areadetail[i].area_nameeng;
         temp[3] = areadic[areadetail[i].area_type];
         temp[4] = areadetail[i].area_note;
+        temp[5] = areadetail[i].area_svgfile;
+        if(temp[5] == null || temp[5] == ""){
+            hrefstring="./editarea/"+temp[0];
+        }else{
+            hrefstring="./editindoorarea/"+temp[0];
+        }
         var tr = `<td>${i + 1}</td>
         <td>
-            <a href="./editarea/${temp[0]}">
+            <a href=${hrefstring}>
                 編集
             </a>
         </td>
