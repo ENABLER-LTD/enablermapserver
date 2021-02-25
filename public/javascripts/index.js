@@ -10,7 +10,60 @@ let userdetaillist = [];
 let pnamelist = [];
 let pnamedic = {};
 let uidlistforajax = null;
+const image = "http://104.198.245.131/icon/icon_blue.png";
 
+
+document.getElementById("area").addEventListener('click', function () {
+    window.open("./arealist");
+})
+
+function getareadetail() {
+    $.ajax({
+        type: 'GET',
+        url: mapconfig.getAllAreadetail(),
+        success: function (data) {
+            if (data != null) {
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i].area_svgfile == null) {
+                        var templist = data[i].area_latlng.split("|");
+                        var areaCoords = [];
+                        for (let j = 0, len = templist.length; j < len; j++) {
+                            var tempstring = {
+                                lat: Number(templist[j].split(";")[0]),
+                                lng: Number(templist[j].split(";")[1])
+                            }
+                            if (j == 0) {
+                                new google.maps.Marker({
+                                    position: tempstring,
+                                    map,
+                                    icon: image,
+                                });
+                            }
+                            areaCoords.push(tempstring);
+
+                        }
+                        var areaTriangle = new google.maps.Polygon({
+                            paths: areaCoords,
+                            strokeColor: "#0000FF",
+                            strokeOpacity: 0.8,
+                            strokeWeight: 3,
+                            fillColor: "#0000FF",
+                            fillOpacity: 0.35,
+                        });
+                        areaTriangle.setMap(map);
+                        areaTriangle.addListener('click', function () {
+                            alert("AreaName:" + data[i].area_name);
+                        })
+                    }
+
+                }
+            }
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+}
 
 function getuidlist() {
     var data = [];
@@ -319,6 +372,8 @@ var init = function () {
     });
 
     getmapdetail(companycode);
+    //get area detail
+    getareadetail();
 
     drawPosition();
 }
@@ -983,17 +1038,17 @@ function makeurl() {
 }
 
 //画面コントロール
-document.getElementById('ecording').addEventListener('click',function(){
+document.getElementById('ecording').addEventListener('click', function () {
     document.getElementById('bsetting').style.display = 'none';
     document.getElementById('pw-chagen').style.display = 'none';
 })
 
-document.getElementById('pwss').addEventListener('click',function(){
+document.getElementById('pwss').addEventListener('click', function () {
     document.getElementById('bsetting').style.display = 'none';
     document.getElementById('mobile-record').style.display = 'none';
 })
 
-document.getElementById('beacon-point').addEventListener('click',function(){
+document.getElementById('beacon-point').addEventListener('click', function () {
     document.getElementById('pw-chagen').style.display = 'none';
     document.getElementById('mobile-record').style.display = 'none';
 })
