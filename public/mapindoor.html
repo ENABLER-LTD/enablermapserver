@@ -221,6 +221,34 @@
         window.close();
     })
 
+    function getareadetail() {
+        $.ajax({
+            type: 'GET',
+            url: mapconfig.getareadetailbyname() + filename,
+            success: function (data) {
+                if (data != null) {
+                    for (let i = 0; i < data.length; i++) {
+                        var areaCoords = [];
+                        var templist = data[i].area_latlng.split("|");
+                        for (let j = 0, len = templist.length; j < len; j++) {
+                            var tempstring = [Number(templist[j].split(";")[0]), Number(templist[j].split(";")[1])];
+                            areaCoords.push(tempstring);
+                        }
+
+
+                        L.polygon(areaCoords, {color: 'blue'}).addTo(indoormap).addEventListener('click', function () {
+                            alert("AreaName:" + data[i].area_name);
+                        });
+
+                    }
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+
 
     var timedraw = function (fn, millisec) {
         function interval() {
@@ -352,7 +380,9 @@
 
         var beaconSetting = $.cookie('beaconsetting');
         if (beaconSetting != 'true') {
+            getareadetail();
             timedraw(showallposition, 3000);
+
         } else {
             document.getElementById("beacondataform").style.display = 'block';
             var beaconBox = document.querySelector('.beacon-point')
@@ -423,7 +453,7 @@
                     temp[6] = data[i].b_note;
 
 
-                    var tr = `<td>${i+1}</td>
+                    var tr = `<td>${i + 1}</td>
                         <td class="imgs">
                         <img src="${temp[1]}" onclick='latlngedit(${temp[0]})'/>
                         </td>

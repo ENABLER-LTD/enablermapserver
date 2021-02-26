@@ -214,4 +214,9 @@ class mapconfig {
     updateareadetail(){
         return this.beaconurl + 'updateareadetail'
     }
+
+    getareadetailbyname(){
+        return this.beaconurl + 'getareadetailbyname/'
+    }
+
 }

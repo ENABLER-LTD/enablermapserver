@@ -42,6 +42,7 @@ function getareadetail() {
                             areaCoords.push(tempstring);
 
                         }
+                        //这里可以把marker存放进数组然后遍历出来加方法
                         var areaTriangle = new google.maps.Polygon({
                             paths: areaCoords,
                             strokeColor: "#0000FF",
