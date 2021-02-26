@@ -32,13 +32,13 @@ function getareadetail() {
                                 lat: Number(templist[j].split(";")[0]),
                                 lng: Number(templist[j].split(";")[1])
                             }
-                            if (j == 0) {
-                                new google.maps.Marker({
-                                    position: tempstring,
-                                    map,
-                                    icon: image,
-                                });
-                            }
+                            // if (j == 0) {
+                            //     new google.maps.Marker({
+                            //         position: tempstring,
+                            //         map,
+                            //         icon: image,
+                            //     });
+                            // }
                             areaCoords.push(tempstring);
 
                         }
