@@ -17,6 +17,32 @@ document.getElementById("area").addEventListener('click', function () {
     window.open("./arealist");
 })
 
+document.getElementById("beacon").addEventListener('click', function () {
+    window.open("./beaconlist");
+
+})
+
+document.getElementById("department").addEventListener('click', function () {
+    window.open("./departmentset");
+})
+
+document.getElementById("enterprise").addEventListener('click', function () {
+    window.open("./enterpriseSettings");
+})
+
+document.getElementById("picture-list").addEventListener('click', function () {
+    window.open("./picturelist");
+})
+
+document.getElementById("user-list").addEventListener('click', function () {
+    window.open("./userlist");
+})
+
+
+document.getElementById("adminsetting").addEventListener('click', function () {
+    window.open("./admin-settings");
+})
+
 function getareadetail() {
     $.ajax({
         type: 'GET',
@@ -837,11 +863,14 @@ function iconSwitch() {
         aClass[i].index = i
         aClass[i].addEventListener('click', function () {
             for (let n = 0; n < aClass.length; n++) {
-                const pathEle = aClass[n].getElementsByTagName('path')[0]
-                pathEle.setAttribute('fill', '#007bff')
+                const imgEle = aClass[n].getElementsByTagName('img')[0]
+                const imgSrc = imgEle.src
+                imgEle.setAttribute('src', imgSrc.replace('white','blue'))
+                console.log(imgEle)
             }
-            const pathEle = aClass[this.index].getElementsByTagName('path')[0]
-            pathEle.setAttribute('fill', '#fff')
+            const imgEle = aClass[this.index].getElementsByTagName('img')[0]
+            const imgSrc = imgEle.src
+            imgEle.setAttribute('src', imgSrc.replace('blue','white'))
         })
     }
 }
