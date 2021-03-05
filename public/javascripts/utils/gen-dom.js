@@ -70,15 +70,15 @@ class GenDOM {
             ele_menuBtn[`on${menuOpts.handlerName}`] = menuOpts.event
             ele_menuBtn.bindData = menuOpts.bindData
             ele_menuBtn.innerHTML = `
-        <img src="/icon/muen-btn.png" alt="" class="menu-btn" >
+        <img src="./icon/menu-icons/meun.svg" alt="" class="menu-btn">
         <div class="menu-options-btn" style="display: none;">
             <ul>
                 <li>
-                    <img src="/icon/map.png" alt="">
+                    <img src="./icon/menu-icons/Historydisplay-blue.svg" alt=""> 
                     <a href="#" class="resume-display-btn"><span>過去履歴表示</span></a>
                 </li>
                 <li class="updateuserbtn">
-                    <img src="/icon/user.png" alt="">
+                    <img src="./icon/menu-icons/user-setting-blue.svg" alt="">
                     <a class="urlset"><span>ユーザー編集</span></a>
                 </li>
             </ul>

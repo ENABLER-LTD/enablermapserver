@@ -273,7 +273,7 @@ p, label{
     width: 100%;
     height: 38px !important;
 }
-.delete-btn svg,#create-btn svg{
+.delete-btn img,#create-btn img{
     width: 24px;
     height: 24px;
     margin-bottom: 5px

@@ -229,16 +229,18 @@
                 if (data != null) {
                     for (let i = 0; i < data.length; i++) {
                         var areaCoords = [];
-                        var templist = data[i].area_latlng.split("|");
-                        for (let j = 0, len = templist.length; j < len; j++) {
-                            var tempstring = [Number(templist[j].split(";")[0]), Number(templist[j].split(";")[1])];
-                            areaCoords.push(tempstring);
+                        if (data[i].area_latlng != null) {
+                            var templist = data[i].area_latlng.split("|");
+                            for (let j = 0, len = templist.length; j < len; j++) {
+                                if (Number(templist[j].split(";")[0]) != 0 && Number(templist[j].split(";")[1]) != 0) {
+                                    var tempstring = [Number(templist[j].split(";")[0]), Number(templist[j].split(";")[1])];
+                                    areaCoords.push(tempstring);
+                                }
+                            }
+                            L.polygon(areaCoords, {color: 'blue'}).addTo(indoormap).addEventListener('click', function () {
+                                alert("AreaName:" + data[i].area_name);
+                            });
                         }
-
-
-                        L.polygon(areaCoords, {color: 'blue'}).addTo(indoormap).addEventListener('click', function () {
-                            alert("AreaName:" + data[i].area_name);
-                        });
 
                     }
                 }
@@ -351,6 +353,7 @@
             indoormap.setZoom(22);
 
 
+            getareadetail();
             //地图修正
             // indoormap.on("zoomend", function () {
             //     document.querySelector('.targetmapclass').style.height = Number(parseInt(document.querySelector('.targetmapclass').style.width) * imagescale) + "px";
@@ -380,7 +383,6 @@
 
         var beaconSetting = $.cookie('beaconsetting');
         if (beaconSetting != 'true') {
-            getareadetail();
             timedraw(showallposition, 3000);
 
         } else {

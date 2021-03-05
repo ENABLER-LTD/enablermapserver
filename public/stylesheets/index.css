@@ -23,10 +23,13 @@ html, body, .map-box, .row {
 
 #meun {
     box-shadow: 0.1px 10px 15px 2px rgba(0, 0, 0, 0.1) !important;
+    width: 250px !important;
+    height: 100% !important;
+    position: relative;
 }
 
-#meun, #lists {
-    width: 200px !important;
+#lists {
+    width: 250px !important;
     height: 100% !important;
     position: relative;
 }

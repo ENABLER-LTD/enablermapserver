@@ -83,7 +83,16 @@ ul{
 }
 .display-icon{
     position: absolute;
-    right: 20px;
+    height: 38px;
+    right: 55px;
+}
+
+.display-icon img{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 .user-name{
     position: relative;

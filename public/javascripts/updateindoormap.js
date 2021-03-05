@@ -4,7 +4,7 @@ let createBtn = document.getElementById('create-btn')
 var fileText = document.querySelector('.file-text')
 map = new mapconfig();
 
-const trashIconSvg = '<svg t="1605763994929" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2902"><path d="M970.24 256h-301.44L592.64 160H431.36L355.2 256H53.76V192h270.72l76.16-96h222.72L699.52 192h270.72v64zM803.84 928H220.16L144 356.48l64-8.96 67.84 516.48h472.32l67.84-516.48 64 8.96-76.16 571.52z" fill="#ffffff" p-id="2903"></path><path d="M376.96 412.16h64v371.84h-64zM583.04 412.16h64v371.84h-64z" fill="#ffffff" p-id="2904"></path></svg>'
+const trashIconSvg = '<img src="../icon/menu-icons/delete-white.svg" alt="">'
 
 var createRemoveBtn = function (basedom, handlerName = '', handlerEvent = function () {
 }) {
@@ -146,6 +146,15 @@ fileUploader.onchange = function (e) {
     preview.setAttribute('src', blobURL)
 }
 
+
+function datacheck(string) {
+    var reg = /^[0-9a-zA-Z]+$/
+    if (!reg.test(string)) {
+        return false;
+    }
+    return true;
+}
+
 //upData btn
 const submitBtn = document.getElementById('submit-btn')
 submitBtn.addEventListener('click', function () {
@@ -200,6 +209,13 @@ submitBtn.addEventListener('click', function () {
     var floor = document.getElementById("floor").value;
     var note = document.getElementById("note-text").value;
     var alt = positionInfo[0].height;
+
+
+    if (datacheck(targetfilename) == false) {
+        alert("filename was accepted 0-9,A-Z,a-z only!");
+        return false;
+    }
+
 
     var formData = new FormData();
     formData.append('mapsvg', file);

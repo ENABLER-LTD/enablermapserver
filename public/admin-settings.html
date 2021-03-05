@@ -1,74 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="/javascripts/configsetting.js"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-  <link  rel="stylesheet" href="/stylesheets/admin-settings.css">
-  <title>管理者設定</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/javascripts/configsetting.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/stylesheets/admin-settings.css">
+    <title>管理者設定</title>
 </head>
 <body>
-  <div id="admin-settings-box">
+<div id="admin-settings-box">
     <div id="navigation-box">
-      <div id="userSettings-bnt">
-          <img src="/icon/Settings.png" alt="">
-          <h3>管理者設定</h3>
-      </div>
-      <div id="return-bnt">
-          <a href="./mainmap">
-              <button type="button" class="btn btn-primary">
-                  <img src="/icon/return.png" alt="">
-              </button>
-          </a>
-      </div>
+        <div id="userSettings-bnt">
+            <img src="./icon/menu-icons/management-white.svg" alt="">
+            <h3>管理者設定</h3>
+        </div>
+        <div id="return-bnt">
+            <a href="./mainmap">
+                <button type="button" class="btn btn-primary">
+                    <img src="./icon/menu-icons/return-white.svg" alt="">
+                </button>
+            </a>
+        </div>
     </div>
     <div id="data-upload">
-      <div style="width: 52%; margin: 0 auto;">
-        <p>Data Upload Cycle (sec)</p>
-        <form>
-          <select class="form-control" id="timedata">
-            <option>3</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
-        </form>
-        <button id="updatabtn" class="btn btn-primary up-data-btn">Updata</button>
-      </div>
+        <div style="width: 52%; margin: 0 auto;">
+            <p>Data Upload Cycle (sec)</p>
+            <form>
+                <select class="form-control" id="timedata">
+                    <option>3</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </form>
+            <button id="updatabtn" class="btn btn-primary up-data-btn">Updata</button>
+        </div>
     </div>
-  </div>
-  <script>
-    mapconfig=new mapconfig();
+</div>
+<script>
+    mapconfig = new mapconfig();
 
-    document.getElementById('updatabtn').addEventListener('click',function () {
-      var time = $("#timedata").find("option:selected").text();
-      var cookie_value = $.cookie("enabermap.uid");
-      var companycode = cookie_value.substring(0,5);
-      $.ajax({
-        type: 'POST',
-        url: mapconfig.uploadtime(),
-        contentType: "application/json",
-        dataType: "text",
-        data: JSON.stringify({"data": {"companycode": companycode, "uploadtime": time}}),
-        success: function (data) {
-          if(JSON.parse(data).result == 'success'){
-            alert("updata success!");
-            window.location.href = '/mainmap';
-          }else{
-            alert("updata failed!");
-          }
-        },
-        error: function () {
-          alert('Please check your network,if it is still not work.Please look admin for help!');
-        }
-      })
+    document.getElementById('updatabtn').addEventListener('click', function () {
+        var time = $("#timedata").find("option:selected").text();
+        var cookie_value = $.cookie("enabermap.uid");
+        var companycode = cookie_value.substring(0, 5);
+        $.ajax({
+            type: 'POST',
+            url: mapconfig.uploadtime(),
+            contentType: "application/json",
+            dataType: "text",
+            data: JSON.stringify({"data": {"companycode": companycode, "uploadtime": time}}),
+            success: function (data) {
+                if (JSON.parse(data).result == 'success') {
+                    alert("updata success!");
+                    window.location.href = '/mainmap';
+                } else {
+                    alert("updata failed!");
+                }
+            },
+            error: function () {
+                alert('Please check your network,if it is still not work.Please look admin for help!');
+            }
+        })
     })
-  </script>
+</script>
 </body>
 </html>

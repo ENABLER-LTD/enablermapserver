@@ -127,7 +127,7 @@ var init = function () {
         shape = null;
     })
 }
-init();
+
 
 var editBox = document.querySelector('.area-edit')
 var title = editBox.querySelector('.navigation-box')

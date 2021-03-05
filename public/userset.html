@@ -20,13 +20,13 @@
     <div class="">
         <div class="navigation-box">
             <div class="user-list-bnt">
-                <img src="/icon/Settings.png" alt="">
+                <img src="./icon/menu-icons/management-white.svg" alt="">
                 <h3>ユーザー設定</h3>
             </div>
             <div class="return-bnt">
                 <a href="/userlist">
                     <button type="button" class="btn btn-primary">
-                        <img src="icon/return.png" alt="">
+                        <img src="./icon/menu-icons/return-white.svg" alt="">
                     </button>
                 </a>
             </div>
@@ -57,12 +57,7 @@
                     <p>Pass Word</p>
                     <input type="password" class="form-control pass" id="inputPassword" id="pwd">
                     <div class="display-icon">
-                        <svg t="1609905531746" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                             xmlns="http://www.w3.org/2000/svg" p-id="2698" width="38" height="38">
-                            <path fill="#cccccc"
-                                  d="M512 791.272727c-186.88 0-372.363636-232.680727-372.363636-279.272727 0-46.685091 186.298182-279.272727 372.363636-279.272727 185.483636 0 372.363636 232.704 372.363636 279.272727 0 46.312727-185.972364 279.272727-372.363636 279.272727z m0-512c-162.792727 0-325.818182 193.838545-325.818182 232.727273 0 38.818909 162.304 232.727273 325.818182 232.727273 163.095273 0 325.818182-194.141091 325.818182-232.727273 0-38.795636-163.514182-232.727273-325.818182-232.727273z m0.698182 349.230546a116.363636 116.363636 0 1 1 0.046545-232.750546 116.363636 116.363636 0 0 1-0.023272 232.750546z m0-186.181818a69.818182 69.818182 0 1 0 0 139.61309 69.818182 69.818182 0 0 0 0-139.61309z"
-                                  p-id="2699"></path>
-                        </svg>
+                        <img src="./icon/menu-icons/display-gray.svg" alt="">
                     </div>
                 </li>
                 <li>
@@ -241,14 +236,14 @@
     //pass Display
     var displayIcon = document.querySelector('.display-icon')
     var pass = document.querySelector('#inputPassword')
-    var iconColor = displayIcon.querySelector('path')
+    var iconColor = displayIcon.querySelector('img')
     displayIcon.addEventListener('click', function () {//
         if (pass.type === 'password') {
             pass.type = 'text'
-            iconColor.setAttribute('fill', '#007BFF')
+            iconColor.setAttribute('src', iconColor.src.replace('gray','blue'))
         } else {
             pass.type = 'password'
-            iconColor.setAttribute('fill', '#CCCCCC')
+            iconColor.setAttribute('src', iconColor.src.replace('blue','gray'))
         }
     })
 

@@ -19,7 +19,6 @@ document.getElementById("area").addEventListener('click', function () {
 
 document.getElementById("beacon").addEventListener('click', function () {
     window.open("./beaconlist");
-
 })
 
 document.getElementById("department").addEventListener('click', function () {
@@ -427,12 +426,12 @@ function btn() {
         if (meun.style.display == 'none') {
             meun.style.display = 'block'
             if (meun.style.display == 'block') {
-                cancel.src = '/icon/hide-btn.png'
+                cancel.src = './icon/menu-icons/hide.svg'
             }
         } else {
             meun.style.display = 'none'
             if (meun.style.display == 'none') {
-                cancel.src = '/icon/right-btn.png'
+                cancel.src = './icon/menu-icons/right.svg'
             }
         }
     })
@@ -441,13 +440,13 @@ function btn() {
             lists.style.display = 'block'
             mobileRecord.style.display = 'block'
             if (lists.style.display == 'block') {
-                rightBtn.src = '/icon/hide-btn.png'
+                rightBtn.src = './icon/menu-icons/hide.svg'
             }
         } else {
             mobileRecord.style.display = 'none'
             lists.style.display = 'none'
             if (lists.style.display == 'none') {
-                rightBtn.src = '/icon/hide-btn.png'
+                rightBtn.src = './icon/menu-icons/hide.svg'
             }
         }
     })
@@ -462,12 +461,12 @@ function btn() {
         if (lists.style.display == 'none') {
             lists.style.display = 'block'
             if (lists.style.display == 'block') {
-                rightBtn.src = '/icon/hide-btn.png'
+                rightBtn.src = './icon/menu-icons/hide.svg'
             }
         } else {
             lists.style.display = 'none'
             if (lists.style.display == 'none') {
-                rightBtn.src = '/icon/left-btn.png'
+                rightBtn.src = './icon/menu-icons/left.svg'
             }
         }
     })

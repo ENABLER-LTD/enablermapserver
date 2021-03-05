@@ -19,14 +19,14 @@
     <div id="indoor-map">
         <div id="navigation-box">
             <div id="userSettings-bnt">
-                <img src="/icon/Settings.png" alt="">
+                <img src="./icon/menu-icons/management-white.svg" alt="">
                 <h3>屋内地図設定</h3>
             </div>
             <div id="return-bnt">
                 <a href="./picturelist">
                     <button type="button" class="btn btn-primary">
                         <!-- ホームページ -->
-                        <img src="/icon/return.png" alt="">
+                        <img src="./icon/menu-icons/return-white.svg" alt="">
                     </button>
                 </a>
             </div>
@@ -38,7 +38,7 @@
                     <label style="position: absolute; right: 0px;">図面登録</label>
                 </div>
                 <div class="file-icon" id="file-icon">
-                    <img src="/icon/file.png" alt="">
+                    <img src="./icon/menu-icons/file-blue.svg" alt="">
                 </div>
                 <div class="file-up">
                     <input class="form-control-file" type="file" name="company" id="company" accept="image/svg">
@@ -73,11 +73,7 @@
                     <div class="input-list" id="input-list">
                         <div id="create-btn">
                             <button type="button" class="btn btn-primary">
-                                <svg t="1605764327048" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                                     xmlns="http://www.w3.org/2000/svg" p-id="5641">
-                                    <path d="M923.4 486H540V101.6c0-15.4-12.6-28-28-28s-28 12.6-28 28V486H100.6c-15.4 0-28 12.6-28 28s12.6 28 28 28H484v382.6c0 15.4 12.6 28 28 28s28-12.6 28-28V542h383.4c15.4 0 28-12.6 28-28s-12.6-28-28-28z"
-                                          fill="#ffffff" p-id="5642"></path>
-                                </svg>
+                                <img src="./icon/menu-icons/add.svg" alt="">
                             </button>
                         </div>
                     </div>
@@ -102,7 +98,7 @@
     let inputList = document.getElementById('input-list')
     let createBtn = document.getElementById('create-btn')
 
-    const trashIconSvg = '<svg t="1605763994929" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2902"><path d="M970.24 256h-301.44L592.64 160H431.36L355.2 256H53.76V192h270.72l76.16-96h222.72L699.52 192h270.72v64zM803.84 928H220.16L144 356.48l64-8.96 67.84 516.48h472.32l67.84-516.48 64 8.96-76.16 571.52z" fill="#ffffff" p-id="2903"></path><path d="M376.96 412.16h64v371.84h-64zM583.04 412.16h64v371.84h-64z" fill="#ffffff" p-id="2904"></path></svg>'
+    const trashIconSvg = '<img src="./icon/menu-icons/delete-white.svg" alt="">'
 
     var createRemoveBtn = function (basedom, handlerName = '', handlerEvent = function () {
     }) {
@@ -214,6 +210,15 @@
     createFormRow()
     createBtn.onclick = createFormRow
 
+    function datacheck(string) {
+        var reg = /^[0-9a-zA-Z]+$/
+        if (!reg.test(string)) {
+            return false;
+        }
+        return true;
+    }
+
+
     //图片本地预览
     var preview = document.getElementById('preview');
     var file;
@@ -283,6 +288,11 @@
                 position = position + '|';
             }
         }
+        if (datacheck(filename) == false) {
+            alert("filename was accepted 0-9,A-Z,a-z only!");
+            return false;
+        }
+
 
         var cookie_value = $.cookie("enabermap.uid");
         var companycode = cookie_value.substring(0, 5);
