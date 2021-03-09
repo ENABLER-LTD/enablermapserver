@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnablerMapDemo</title>
+    <script src="/javascripts/configsetting.js"></script>
+    <link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+<body>
+<div class="map-box" id="map-box">
+    <div class="row">
+        <div class="col map">
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <div id="map"></div>
+            </div>
+        </div>
+        <div class="beacon-point" id="bsetting">
+            <div class="beacon-title">
+                <span>Beacon位置設定</span>
+                <div class="beacon-shut">
+                    <a href="./beaconlist"><img src="./icon/menu-icons/closed-white.svg"></a>
+                </div>
+            </div>
+            <div class="beacon-from">
+                <table id="beacondetailtb">
+                    <tr class="title-1">
+                        <th class="num" rowspan='2'>No.</th>
+                        <th class="edit" rowspan='2'>D&D<br>icon</th>
+                        <th class="name" rowspan='2'>Name</th>
+                        <th class="" colspan='3'>Beacon ID</th>
+                        <th class="note" rowspan='2'>Note</th>
+                    </tr>
+                    <tr class="title-2">
+                        <td class="language" style="width: 400px;">UUID</td>
+                        <td class="language" style="width: 100px;">Major</td>
+                        <td class="language" style="width: 100px;">Minor</td>
+                    </tr>
+                </table>
+                <div class="display-quantity">
+                    <div class="display-text">表示件数</div>
+                    <select name="" id="">
+                        <option value="">50</option>
+                        <option value="">100</option>
+                        <option value="">200</option>
+                        <option value="">300</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col col-lg-2" id="lists" style="display: none;">
+            <div class="list-group title-style" id="list-box" style="position: relative;">
+                <div class="list-group-item active">
+                    <p id="user-title"></p>
+                    <div id="refresh-btn">
+                        <img src="./icon/menu-icons/update-white.svg" alt="" id="refresh-img">
+                    </div>
+                </div>
+                <div class="tree-box">
+                    <div class="treeitem" id="userdetailshow">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+<script src="/javascripts/newbeaconpoint.js"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=AIzaSyAvtx-D_AVrB78-bTDzSaFuBLP5nRecsKM&libraries=&v=weekly&callback=init"></script>
+</body>
+</html>

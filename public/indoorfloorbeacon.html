@@ -29,24 +29,8 @@
 
     var floorinfo;
     var map;
-    const uidlist = $.cookie("uidlist").split(",");
     var filename = $.cookie("filename");
-    const pnamelist = $.cookie("pnamelist").split(",");
-    var pointlist = [];
 
-    var uidlistforajax;
-
-    for (let i = 0; i < uidlist.length; i++) {
-
-        if (i == uidlist.length - 1) {
-            uidlistforajax = uidlistforajax + uidlist[i]
-        } else if (i == 0) {
-            uidlistforajax = uidlist[i] + ";"
-        } else {
-            uidlistforajax = uidlistforajax + uidlist[i] + ";"
-        }
-    }
-    ;
 
     $.ajax({
         type: 'GET',
@@ -104,72 +88,12 @@
                 $.cookie('flooralt', floorinfo[i].alt + ";" + floorinfo[i + 1].alt);
             }
 
-            window.open(mapconfig.getbaseurl() + 'mapindoor');
+            window.open(mapconfig.getbaseurl() + 'mapindoorbeacon');
         });
         target.push(polygon);
 
     }
     var layer = new maptalks.VectorLayer('vector', target, {enableAltitude: true}).addTo(map);
-
-    var timedraw = function (fn, millisec) {
-        function interval() {
-            setTimeout(interval, millisec);
-            fn();
-        }
-
-        setTimeout(interval, millisec)
-    }
-
-
-    var showallposition = function () {
-        if (map.getLayer('pointlayer') != null) {
-            pointlist.length = 0;
-            map.getLayer('pointlayer').remove();
-        }
-
-        $.ajax({
-            type: 'GET',
-            async: false,
-            url: mapconfig.getlocations() + uidlistforajax,
-            success: function (data) {
-                if (data != null) {
-                    for (let i = 0; i < data.length; i++) {
-                        if (data[i] != null) {
-                            var alt = 0;
-                            var temp = data[i].split(";");
-                            if (temp[2] != "") {
-                                alt = Number(temp[2]);
-                            }
-                            var point = new maptalks.Marker(
-                                [Number(temp[1]), Number(temp[0])],
-                                {
-                                    properties: {
-                                        altitude: alt
-                                    }
-                                }
-                            ).on('click', function () {
-                                console.log(pnamelist[i])
-                            })
-
-                            pointlist.push(point);
-                        }
-                    }
-
-                }
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        })
-
-
-        new maptalks.VectorLayer('pointlayer', pointlist, {
-            enableAltitude: true,
-            altitudeProperty: 'altitude'
-        }).addTo(map);
-
-    }
-    timedraw(showallposition, 3000);
 
 
 </script>

@@ -1068,19 +1068,14 @@ function makeurl() {
 
 //画面コントロール
 document.getElementById('ecording').addEventListener('click', function () {
-    document.getElementById('bsetting').style.display = 'none';
     document.getElementById('pw-chagen').style.display = 'none';
 })
 
 document.getElementById('pwss').addEventListener('click', function () {
-    document.getElementById('bsetting').style.display = 'none';
     document.getElementById('mobile-record').style.display = 'none';
 })
 
-document.getElementById('beacon-point').addEventListener('click', function () {
-    document.getElementById('pw-chagen').style.display = 'none';
-    document.getElementById('mobile-record').style.display = 'none';
-})
+
 
 
 

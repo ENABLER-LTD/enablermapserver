@@ -18,6 +18,19 @@ router.get('/floorselect', function (req, res, next) {
     res.render('floorselect');
 });
 
+router.get('/setlocationbeacon', function (req, res, next) {
+    res.render('setlocationbeacon');
+});
+
+router.get('/indoorfloorbeacon', function (req, res, next) {
+    res.render('indoorfloorbeacon');
+});
+
+router.get('/mapindoorbeacon', function (req, res, next) {
+    res.render('mapindoorbeacon');
+});
+
+
 router.get('/indoormaparea', function (req, res, next) {
     res.render('indoormaparea');
 });
