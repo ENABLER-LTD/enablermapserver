@@ -143,6 +143,10 @@ class mapconfig {
         return this.baseurl + 'updatedepdetail'
     }
 
+    updatedepdetailsp(){
+        return this.baseurl + 'updatedepdetailsp'
+    }
+
     getdetailbyfilename() {
         return this.baseurl + 'getdetailbyfilename/'
     }

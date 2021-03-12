@@ -59,6 +59,7 @@
                             <li class="jp leftStyle">部門名称（日本語）</li>
                             <li class="en leftStyle">depName(english)</li>
                             <li class="note">Note</li>
+                            <li class="note">Status</li>
                         </ul>
                     </div>
                     <div class="input-list" id="target">
@@ -121,7 +122,7 @@
                                 <input id="${id}-note" class="form-control" type="text" value="">
                             </li>
                             <li>
-                                <button id="${id}-deletebutton" type="button" class="btn btn-danger" onclick="deleteul(${id})">Delete</button>
+                                <select id="${id}-status"  class="form-control" ><option value="1">有効</option><option value="0">無効</option></select>
                             </li>
                         </ul>`
         $("#target").append(body);
@@ -145,6 +146,9 @@
                             </li>
                             <li class="leftStyle note">
                                 <input id="${id}-note" class="form-control" type="text" value="未設定">
+                            </li>
+                            <li>
+                                <select id="${id}-status"  class="form-control" ><option value="1">有効</option><option value="0">無効</option></select>
                             </li>
                         </ul>`
         $("#target").append(body);
@@ -198,129 +202,141 @@
         alldepcode.splice(index, 1)
     }
 
-    function deleteul(id) {
-        if ($("#" + id + "-newdepcode").length > 0) {
-            var temp = document.getElementById(id + "-newdepcode").value;
-            arrdelete(temp)
-        }
-        $("#" + id).remove();
-        listnum = listnum - 1;
-        if (listnum != 0) {
-            $("#" + listnum + "-deletebutton").attr('disabled', false);
-        }
-    }
+    // function deleteul(id) {
+    //     if ($("#" + id + "-newdepcode").length > 0) {
+    //         var temp = document.getElementById(id + "-newdepcode").value;
+    //         arrdelete(temp)
+    //     }
+    //     $("#" + id).remove();
+    //     listnum = listnum - 1;
+    //     if (listnum != 0) {
+    //         $("#" + listnum + "-deletebutton").attr('disabled', false);
+    //     }
+    // }
 
     function check(id) {
-        alldepcode = [];
-        for (let i = 0; i < listnum; i++) {
-            if (Number(i) != Number(id - 1)) {
-                var temp = document.getElementById(Number(i + 1) + "-newdepcode").value;
-                alldepcode.push(temp);
+        if (document.getElementById(id + "-newdepcode").value.length != 5) {
+            alert("部門番号は5桁数です");
+            document.getElementById(id + "-newdepcode").focus();
+        } else {
+            alldepcode = [];
+            for (let i = 0; i < listnum; i++) {
+                if (Number(i) != Number(id - 1)) {
+                    var temp = document.getElementById(Number(i + 1) + "-newdepcode").value;
+                    alldepcode.push(temp);
+                }
+            }
+
+            var tempdata = document.getElementById(id + "-newdepcode").value;
+            if (alldepcode.indexOf(tempdata) != -1) {
+                alert("depcode is existed!Please rewrite depcode!");
+                document.getElementById(id + "-newdepcode").focus();
             }
         }
 
-        var tempdata = document.getElementById(id + "-newdepcode").value;
-        if (alldepcode.indexOf(tempdata) != -1) {
-            alert("depcode is existed!Please rewrite depcode!");
-            document.getElementById(id + "-newdepcode").focus();
-        }
     }
 
     document.getElementById("submit-btn").addEventListener("click", function () {
-        $.ajax({
-            type: 'POST',
-            url: mapconfig.insertofficeall(),
-            contentType: "application/json",
-            async: false,
-            dataType: "text",
-            data: JSON.stringify({
-                "data": {
-                    "officecode": $("#officecode").val(),
-                    "officename": $("#officename").val(),
-                    "officenameeng": $("#officenameeng").val()
+        if (document.getElementById('officecode').value.length != 5 || document.getElementById('officename').value == null || document.getElementById('officenameeng').value == null) {
+            alert("事業所情報全部入力してください。（事業所コードは5桁数）")
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: mapconfig.insertofficeall(),
+                contentType: "application/json",
+                async: false,
+                dataType: "text",
+                data: JSON.stringify({
+                    "data": {
+                        "officecode": $("#officecode").val(),
+                        "officename": $("#officename").val(),
+                        "officenameeng": $("#officenameeng").val()
+                    }
+                }),
+                success: function () {
+                    alert("add new office success!")
+                },
+                error: function () {
+                    alert('Please check your network,if it is still not work.Please look admin for help!');
                 }
-            }),
-            success: function () {
-                alert("add new office success!")
-            },
-            error: function () {
-                alert('Please check your network,if it is still not work.Please look admin for help!');
-            }
-        })
+            })
 
-        for (let i = 1; i <= listnum; i++) {
-            if ($("#" + i + "-newdepcode").length > 0) {
-                $.ajax({
-                    type: 'POST',
-                    url: mapconfig.insertdepall(),
-                    contentType: "application/json",
-                    async: false,
-                    dataType: "text",
-                    data: JSON.stringify({
-                        "data": {
-                            "poffice": $("#officecode").val(),
-                            "depcode": $("#" + i + "-newdepcode").val(),
-                            "depname": $("#" + i + "-newdepname").val(),
-                            "depnameeng": $("#" + i + "-newdepnameeng").val()
+            for (let i = 1; i <= listnum; i++) {
+                if ($("#" + i + "-newdepcode").length > 0) {
+                    $.ajax({
+                        type: 'POST',
+                        url: mapconfig.insertdepall(),
+                        contentType: "application/json",
+                        async: false,
+                        dataType: "text",
+                        data: JSON.stringify({
+                            "data": {
+                                "poffice": $("#officecode").val(),
+                                "depcode": $("#" + i + "-newdepcode").val(),
+                                "depname": $("#" + i + "-newdepname").val(),
+                                "depnameeng": $("#" + i + "-newdepnameeng").val()
+                            }
+                        }),
+                        success: function () {
+                            alert("add new dep(depcode" + $("#" + i + "-newdepcode").val() + ") success!")
+                        },
+                        error: function () {
+                            alert('Please check your network,if it is still not work.Please look admin for help!');
                         }
-                    }),
-                    success: function () {
-                        alert("add new dep(depcode" + $("#" + i + "-newdepcode").val() + ") success!")
-                    },
-                    error: function () {
-                        alert('Please check your network,if it is still not work.Please look admin for help!');
-                    }
-                })
+                    })
 
-                $.ajax({
-                    type: 'POST',
-                    url: mapconfig.insertcompanydetail(),
-                    contentType: "application/json",
-                    async: false,
-                    dataType: "text",
-                    data: JSON.stringify({
-                        "data": {
-                            "pcompanycode": companycode,
-                            "poffice": $("#officecode").val(),
-                            "pdep": $("#" + i + "-newdepcode").val(),
-                            "note": $("#" + i + "-note").val(),
+                    $.ajax({
+                        type: 'POST',
+                        url: mapconfig.insertcompanydetail(),
+                        contentType: "application/json",
+                        async: false,
+                        dataType: "text",
+                        data: JSON.stringify({
+                            "data": {
+                                "pcompanycode": companycode,
+                                "poffice": $("#officecode").val(),
+                                "pdep": $("#" + i + "-newdepcode").val(),
+                                "note": $("#" + i + "-note").val(),
+                                "usestatus": $("#" + i + "-status").val(),
+                            }
+                        }),
+                        success: function () {
+                            alert("add companydetail success!")
+                        },
+                        error: function () {
+                            alert('Please check your network,if it is still not work.Please look admin for help!');
                         }
-                    }),
-                    success: function () {
-                        alert("add companydetail success!")
-                    },
-                    error: function () {
-                        alert('Please check your network,if it is still not work.Please look admin for help!');
-                    }
-                })
-            } else {
-                $.ajax({
-                    type: 'POST',
-                    url: mapconfig.insertcompanydetail(),
-                    contentType: "application/json",
-                    async: false,
-                    dataType: "text",
-                    data: JSON.stringify({
-                        "data": {
-                            "pcompanycode": companycode,
-                            "poffice": $("#officecode").val(),
-                            "pdep": $("#" + i + "-depcode").val(),
-                            "note": $("#" + i + "-note").val(),
+                    })
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: mapconfig.insertcompanydetail(),
+                        contentType: "application/json",
+                        async: false,
+                        dataType: "text",
+                        data: JSON.stringify({
+                            "data": {
+                                "pcompanycode": companycode,
+                                "poffice": $("#officecode").val(),
+                                "pdep": $("#" + i + "-depcode").val(),
+                                "note": $("#" + i + "-note").val(),
+                            }
+                        }),
+                        success: function () {
+                            alert("add companydetail success!")
+                        },
+                        error: function () {
+                            alert('Please check your network,if it is still not work.Please look admin for help!');
                         }
-                    }),
-                    success: function () {
-                        alert("add companydetail success!")
-                    },
-                    error: function () {
-                        alert('Please check your network,if it is still not work.Please look admin for help!');
-                    }
-                })
+                    })
+                }
             }
+            // if(i==listnum){
+            //     alert("all success!")
+            // }
+            window.location.href = "../departmentset"
         }
-        // if(i==listnum){
-        //     alert("all success!")
-        // }
-        window.location.href = "../departmentset"
+
     })
 
 

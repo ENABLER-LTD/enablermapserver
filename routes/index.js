@@ -330,23 +330,28 @@ router.post('/loginbypdphone', async function (req, res, next) {
                 data = JSON.parse(dataString);
                 var str = data[0].pcompanycode + data[0].poffice + data[0].pdep + data[0].pnumber;
                 req.session.isLogin = 1;
-                var enableservicelist= [];
-                if(result2[0].outdoormap == 1){
+                var enableservicelist = [];
+                if (result2[0].outdoormap == 1) {
                     enableservicelist.push("outdoormap");
                 }
-                if(result2[0].indoormap == 1){
+                if (result2[0].indoormap == 1) {
                     enableservicelist.push("indoormap");
                 }
-                if(result2[0].beacon == 1){
+                if (result2[0].beacon == 1) {
                     enableservicelist.push("beacon");
                 }
-                if(result2[0].area == 1){
+                if (result2[0].area == 1) {
                     enableservicelist.push("area");
                 }
-                if(result2[0].calutor == 1){
+                if (result2[0].calutor == 1) {
                     enableservicelist.push("calculation");
                 }
-                res.json({"uid": str,"role":userdetail[0].prole,"service":enableservicelist,"upload":result3[0].uploadtime});
+                res.json({
+                    "uid": str,
+                    "role": userdetail[0].prole,
+                    "service": enableservicelist,
+                    "upload": result3[0].uploadtime
+                });
             } else {
                 res.json({"status": "error"});
             }
@@ -609,7 +614,7 @@ router.post('/insertdepall', async function (req, res, next) {
 //insert companydetail
 router.post('/insertcompanydetail', async function (req, res, next) {
     try {
-        const result = await userpro.insertcompanydetail(req.body.data.pcompanycode, req.body.data.poffice, req.body.data.pdep, req.body.data.note);
+        const result = await userpro.insertcompanydetail(req.body.data.pcompanycode, req.body.data.poffice, req.body.data.pdep, req.body.data.note, Number(req.body.data.usestatus));
         res.send(result);
     } catch (e) {
         console.log(e);
@@ -627,6 +632,18 @@ router.post('/updateofficedetail', async function (req, res, next) {
 router.post('/updatedepdetail', async function (req, res, next) {
     try {
         const result = await userpro.updatedepdetail(req.body.data.poffice, req.body.data.depcode, req.body.data.depname, req.body.data.depnameeng, req.body.data.note, req.body.data.usestatus);
+        res.send(result);
+    } catch (e) {
+        console.log(e);
+        res.send(null);
+    }
+});
+
+//update depdetail
+router.post('/updatedepdetailsp', async function (req, res, next) {
+    console.log(req.body.data.depcode);
+    try {
+        const result = await userpro.updatedepdetailsp(req.body.data.poffice, req.body.data.depcode, req.body.data.depname, req.body.data.depnameeng, req.body.data.note, req.body.data.usestatus,req.body.data.pcompanycode);
         res.send(result);
     } catch (e) {
         console.log(e);

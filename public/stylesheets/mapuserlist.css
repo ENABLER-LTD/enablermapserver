@@ -1,12 +1,23 @@
 .tree-box{
     width: 100%;
-    height: 600px;
+    height: 100%;
     position: relative;
-    border: 1px solid #ccc;
+    overflow: hidden;
+    overflow-y: scroll;
+    border: none;
+}
+.tree-box::-webkit-scrollbar{
+    width: 10px;
+    height: 4px;
+}
+.tree-box::-webkit-scrollbar-thumb{
+    background: #535353;
+}
+.tree-box::-webkit-scrollbar-track{
+    background: #EDEDED;
 }
 .tree-box .treeitem{
     width: 100%;
-    height: 600px;
     padding: 5px 10px;
     position: relative;
     display: flex;
@@ -37,9 +48,13 @@
     padding: 2px;
 }
 .peer-node .node-text{
+    width: 90px;
     height: 30px;
     line-height: 30px;
     float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .peer-node .indentation-box{
     width: 12px;
@@ -50,7 +65,7 @@
     border-radius: 2px;
 }
 .peer-node .checkbox-active{
-    background-color: #007bff;
+    background-color: #0e6eb4;
 }
 .checkbox:hover{
     cursor: pointer;
@@ -80,8 +95,8 @@
     border:  2px solid #e6e6e6;
 }
 .peer-node .menu-btn-box{
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     position: absolute;
     right: 5px;
     top: 50%;
@@ -89,8 +104,7 @@
     z-index: 9999;
 }
 .menu-btn-box .menu-btn{
-    width: 20px;
-    height: 20px;
+    width: 18px;
     cursor: pointer;
 }
 .menu-btn:hover{
@@ -124,8 +138,9 @@
     position: relative;
     margin-right: 10px;
 }
-.menu-options-btn a{
+.menu-options-btn ul li a{
     text-decoration:none;
+    color: #0e6eb4 !important;
 }
 .checkbox-img{
     width: 14px;
@@ -136,3 +151,4 @@
     position: relative;
     transform: rotate(0deg);
 }
+

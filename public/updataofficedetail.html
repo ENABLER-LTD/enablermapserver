@@ -13,7 +13,7 @@
             crossorigin="anonymous"></script>
     <script src="/javascripts/configsetting.js"></script>
     <link rel="stylesheet" href="/stylesheets/officesetting.css">
-    <title>事業所設定</title>
+    <title>事業所編集</title>
 </head>
 
 <body>
@@ -22,7 +22,7 @@
         <div class="navigation-box">
             <div class="user-list-bnt">
                 <img src="../icon/menu-icons/management-white.svg" alt="">
-                <h3>事業所設定</h3>
+                <h3>事業所編集</h3>
             </div>
             <div class="return-bnt">
                 <a href="../departmentset">
@@ -89,6 +89,7 @@
     var depdiceng = {};
     var alldepcode = [];
 
+
     $.ajax({
         type: 'GET',
         async: false,
@@ -136,7 +137,7 @@
             orginlength = data.length - 1;
             listnum = data.length - 1;
             for (let i = 0; i < data.length; i++) {
-                var temporgindata = depdic[data[i].pdep] + depdiceng[data[i].pdep] + data[i].note + data[i].usestatus;
+                var temporgindata = data[i].pdep + depdic[data[i].pdep] + depdiceng[data[i].pdep] + data[i].note + data[i].usestatus;
                 orgindata.push(temporgindata);
                 var body = `<ul id="${i}">
                             <li class="leftStyle departmentNo">
@@ -153,12 +154,16 @@
                             </li>
                             <li class="leftStyle status">
                                 <select id="${i}-status" class="form-control"　value="${data[i].usestatus}">
-                                <option value="1">有効</option>
-                                <option value="0">無効</option>
+                                <option value="1" ${data[i].usestatus == "1" ? "selected" : ""}>有効</option>
+                                <option value="0" ${data[i].usestatus == "0" ? "selected" : ""}>無効</option>
                                 </select>
                             </li>
                         </ul>`
                 $("#target").append(body);
+            }
+            ;
+            if (document.getElementById('0-depcode').value == "00000") {
+                document.getElementById('0-depcode').disabled = false;
             }
         },
         error: function (err) {
@@ -180,6 +185,12 @@
                             </li>
                             <li class="leftStyle note">
                                 <input id="${id}-note" class="form-control" type="text" value="">
+                            </li>
+                            <li class="leftStyle status">
+                                <select id="${id}-status" class="form-control">
+                                <option value="1">有効</option>
+                                <option value="0">無効</option>
+                                </select>
                             </li>
                             <li>
                                 <button id="${id}-deletebutton" type="button" class="btn btn-danger" onclick="deleteul(${id})">Delete</button>
@@ -210,21 +221,26 @@
     }
 
     function check(id) {
-        var templist = [];
-        var tempdata = document.getElementById(id + "-newdepcode").value;
-        if (alldepcode.indexOf(tempdata) != -1) {
-            alert("depcode is existed!Please rewrite depcode!");
+        if (document.getElementById(id + "-newdepcode").value.length != 5) {
+            alert("部門番号は5桁数です");
             document.getElementById(id + "-newdepcode").focus();
-        }
-        for (let i = listnum; i >= alldepcode.length; i--) {
-            if (Number(i) != Number(id)) {
-                var temp = document.getElementById(Number(i) + "-newdepcode").value;
-                templist.push(temp);
+        } else {
+            var templist = [];
+            var tempdata = document.getElementById(id + "-newdepcode").value;
+            if (alldepcode.indexOf(tempdata) != -1) {
+                alert("depcode is existed!Please rewrite depcode!");
+                document.getElementById(id + "-newdepcode").focus();
             }
-        }
-        if (templist.indexOf(tempdata) != -1) {
-            alert("depcode is existed!Please rewrite depcode!");
-            document.getElementById(id + "-newdepcode").focus();
+            for (let i = listnum; i >= alldepcode.length; i--) {
+                if (Number(i) != Number(id)) {
+                    var temp = document.getElementById(Number(i) + "-newdepcode").value;
+                    templist.push(temp);
+                }
+            }
+            if (templist.indexOf(tempdata) != -1) {
+                alert("depcode is existed!Please rewrite depcode!");
+                document.getElementById(id + "-newdepcode").focus();
+            }
         }
     }
 
@@ -253,31 +269,58 @@
         }
 
         for (let i = 0; i < orgindata.length; i++) {
-            var hikakudata = document.getElementById(i + '-depname').value + document.getElementById(i + '-depnameeng').value + document.getElementById(i + '-note').value + document.getElementById(i + '-status').value
+            var hikakudata = document.getElementById(i + '-depcode').value + document.getElementById(i + '-depname').value + document.getElementById(i + '-depnameeng').value + document.getElementById(i + '-note').value + document.getElementById(i + '-status').value
             if (hikakudata != orgindata[i]) {
-                $.ajax({
-                    type: 'POST',
-                    url: mapconfig.updatedepdetail(),
-                    contentType: "application/json",
-                    async: false,
-                    dataType: "text",
-                    data: JSON.stringify({
-                        "data": {
-                            "poffice": $("#officecode").val(),
-                            "depcode": $("#" + i + "-depcode").val(),
-                            "depname": $("#" + i + "-depname").val(),
-                            "depnameeng": $("#" + i + "-depnameeng").val(),
-                            "note": $("#" + i + "-note").val(),
-                            "usestatus": $("#" + i + "-status").val()
+                if (i == 0 && document.getElementById("0-depcode").value != "00000") {
+                    $.ajax({
+                        type: 'POST',
+                        url: mapconfig.updatedepdetailsp(),
+                        contentType: "application/json",
+                        async: false,
+                        dataType: "text",
+                        data: JSON.stringify({
+                            "data": {
+                                "poffice": $("#officecode").val(),
+                                "depcode": $("#" + i + "-depcode").val(),
+                                "depname": $("#" + i + "-depname").val(),
+                                "depnameeng": $("#" + i + "-depnameeng").val(),
+                                "note": $("#" + i + "-note").val(),
+                                "usestatus": $("#" + i + "-status").val(),
+                                "pcompanycode": companycode
+                            }
+                        }),
+                        success: function () {
+                            alert("update dep success!")
+                        },
+                        error: function () {
+                            alert('Please check your network,if it is still not work.Please look admin for help!');
                         }
-                    }),
-                    success: function () {
-                        alert("update dep success!")
-                    },
-                    error: function () {
-                        alert('Please check your network,if it is still not work.Please look admin for help!');
-                    }
-                })
+                    })
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: mapconfig.updatedepdetail(),
+                        contentType: "application/json",
+                        async: false,
+                        dataType: "text",
+                        data: JSON.stringify({
+                            "data": {
+                                "poffice": $("#officecode").val(),
+                                "depcode": $("#" + i + "-depcode").val(),
+                                "depname": $("#" + i + "-depname").val(),
+                                "depnameeng": $("#" + i + "-depnameeng").val(),
+                                "note": $("#" + i + "-note").val(),
+                                "usestatus": $("#" + i + "-status").val()
+                            }
+                        }),
+                        success: function () {
+                            alert("update dep success!")
+                        },
+                        error: function () {
+                            alert('Please check your network,if it is still not work.Please look admin for help!');
+                        }
+                    })
+                }
             }
         }
 
@@ -318,6 +361,7 @@
                             "poffice": $("#officecode").val(),
                             "pdep": $("#" + i + "-newdepcode").val(),
                             "note": $("#" + i + "-note").val(),
+                            "usestatus": $("#" + i + "-status").val(),
                         }
                     }),
                     success: function () {

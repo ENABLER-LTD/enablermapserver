@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EnablerMapDemo</title>
+    <title>Lotus-Home</title>
     <script src="/javascripts/configsetting.js"></script>
     <link rel="stylesheet" href="/stylesheets/mapuserlist.css">
     <link rel="stylesheet" href="/stylesheets/index.css">
@@ -10,71 +10,147 @@
 <body>
 <div class="map-box" id="map-box">
     <div class="row">
-        <div class="col-md-auto" id="meun" style="display: none;">
-            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
-                   aria-controls="v-pills-home" aria-selected="false">
-                    <img src="./icon/menu-icons/home-style-2-white.svg" alt="">
-                    Home
-                </a>
-                <a class="nav-link" id="ecording" data-toggle="pill" href="#v-pills-profiles" target="_blank" role="tab"
-                   aria-controls="v-pills-profile" aria-selected="false">
-                    <img src="./icon/menu-icons/Historydisplay-blue.svg" alt="">
-                    行動履歴表示
-                </a>
-                <a class="nav-link" id="pwss" data-toggle="pill" href="#v-pills-profile" role="tab"
-                   aria-controls="v-pills-profile" aria-selected="false">
-                    <img src="./icon/menu-icons/Passwordchange-blue.svg" alt="">
-                    パスワード変更
-                </a>
-                <a class="nav-link" id="user-list" href="javascript:void(0);" data-toggle="pill" role="tab" aria-controls="v-pills-profile"
-                   aria-selected="false">
-                    <img src="./icon/menu-icons/user-blue.svg" alt="">
-                    ユーザー管理
-                </a>
-                <a class="nav-link" id="picture-list" href="javascript:void(0);" data-toggle="pill" role="tab"
-                   aria-controls="v-pills-profile" aria-selected="false">
-                    <img src="./icon/menu-icons/Privatemapsetting-blue.svg" alt="">
-                    プライベート地図管理
-                </a>
-
-                <a class="nav-link" id="beacon" href="javascript:void(0);"  data-toggle="pill"  role="tab" aria-controls="v-pills-profile"
-                   aria-selected="false">
-                    <img src="./icon/menu-icons/Beaconsetting-blue.svg" alt="">
-                    ビーコン管理
-                </a>
-                <a class="nav-link" id="area" href="javascript:void(0);" data-toggle="pill"  role="tab" aria-controls="v-pills-profile"
-                   aria-selected="false">
-                    <img src="./icon/menu-icons/Areasetting-blue.svg" alt="">
-                    エリア管理
-                </a>
-                <a class="nav-link" id="adminsetting" href="javascript:void(0);" data-toggle="pill" role="tab" aria-controls="v-pills-profile"
-                   aria-selected="false">
-                    <img src="./icon/menu-icons/management-blue.svg" alt="">
-                    管理者設定
-                </a>
-                <a class="nav-link" id="department" href="javascript:void(0);" data-toggle="pill" role="tab"
-                   aria-controls="v-pills-profile" aria-selected="false">
-                    <img src="./icon/menu-icons/department-blue.svg" alt="">
-                    事業所・部門設定
-                </a>
-
-                <a class="nav-link" id="enterprise" href="javascript:void(0);" data-toggle="pill" role="tab"
-                   aria-controls="v-pills-profile" aria-selected="false">
-                    <img src="./icon/menu-icons/enterprise-blue.svg" alt="">
-                    企業・サービス設定
-                </a>
-
-
-                <div class="login-out" id="login-out">
-                    <button type="button" class="btn btn-danger">
-                        <a href="login.html">
-                            サインアウト
-                        </a>
-                    </button>
+        <div class="col-md-auto" id="meun">
+            <div class="nav flex-column nav-pills" id="meun-list">
+                <div class="logo">
+                    <img src="./images/logo.svg" alt="">
                 </div>
+                <ul>
+                    <li class="nav-link active">
+                        <a href="" id="">
+                            <img src="./icon/menu-icons/home-style-2-blue.svg" alt="">
+                            <p>Home</p>
+                        </a>
+                    </li>
+                    <li class="nav-link" id="ecording">
+                        <a href="javascript:void(0)" style="pointer-events:none ">
+                            <img src="./icon/menu-icons/Historydisplay-gray.svg" alt="">
+                            <p>行動履歴表示</p>
+                        </a>
+
+                    </li>
+                    <li class="nav-link">
+                        <a href="./admin-settings" id="v-pills-home-tab" target="view_window">
+                            <img src="./icon/menu-icons/management-gray.svg" alt="">
+                            <p>管理者設定</p>
+                        </a>
+                    </li>
+                    <li class="nav-link" id="pwss" >
+                        <a href="javascript:void(0)" style="pointer-events:none ">
+                            <img src="./icon/menu-icons/Passwordchange-gray.svg" alt="">
+                            <p>パスワード変更</p>
+                        </a>
+
+                    </li>
+                    <li class="nav-link">
+                        <a href="./userlist" id="user-list" target="view_window">
+                            <img src="./icon/menu-icons/Passwordchange-gray.svg" alt="">
+                            <p>ユーザー一覧</p>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="./picturelist" id="userList.html" target="view_window">
+                            <img src="./icon/menu-icons/Privatemapsetting-gray.svg" alt="">
+                            <p>プライベート地図管理</p>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="./enterpriseSettings" id="enterprise" target="view_window">
+                            <img src="./icon/menu-icons/enterprise-gray.svg" alt="">
+                            <p>企業登録</p>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="./departmentset" id="department" target="view_window">
+                            <img src="./icon/menu-icons/department-gray.svg" alt="">
+                            <p>事業所・部門設定</p>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="./beaconlist" id="beacon"  target="view_window">
+                            <img src="./icon/menu-icons/Beaconsetting-gray.svg" alt="" >
+                            <p>Beacon管理</p>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="./arealist" id="area"  target="view_window">
+                            <img src="./icon/menu-icons/Areasetting-gray.svg" alt="" >
+                            <p>Area管理</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="login-out" id="login-out">
+                <a href="login.html">
+                    <img src="./icon/menu-icons/auto-gray.svg" alt="">
+                    <p>サインアウト</p>
+                </a>
             </div>
         </div>
+<!--            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">-->
+<!--                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"-->
+<!--                   aria-controls="v-pills-home" aria-selected="false">-->
+<!--                    <img src="./icon/menu-icons/home-style-2-white.svg" alt="">-->
+<!--                    Home-->
+<!--                </a>-->
+<!--                <a class="nav-link" id="ecording" data-toggle="pill" href="#v-pills-profiles" target="_blank" role="tab"-->
+<!--                   aria-controls="v-pills-profile" aria-selected="false">-->
+<!--                    <img src="./icon/menu-icons/Historydisplay-blue.svg" alt="">-->
+<!--                    行動履歴表示-->
+<!--                </a>-->
+<!--                <a class="nav-link" id="pwss" data-toggle="pill" href="#v-pills-profile" role="tab"-->
+<!--                   aria-controls="v-pills-profile" aria-selected="false">-->
+<!--                    <img src="./icon/menu-icons/Passwordchange-blue.svg" alt="">-->
+<!--                    パスワード変更-->
+<!--                </a>-->
+<!--                <a class="nav-link" id="user-list" href="javascript:void(0);" data-toggle="pill" role="tab" aria-controls="v-pills-profile"-->
+<!--                   aria-selected="false">-->
+<!--                    <img src="./icon/menu-icons/user-blue.svg" alt="">-->
+<!--                    ユーザー管理-->
+<!--                </a>-->
+<!--                <a class="nav-link" id="picture-list" href="javascript:void(0);" data-toggle="pill" role="tab"-->
+<!--                   aria-controls="v-pills-profile" aria-selected="false">-->
+<!--                    <img src="./icon/menu-icons/Privatemapsetting-blue.svg" alt="">-->
+<!--                    プライベート地図管理-->
+<!--                </a>-->
+
+<!--                <a class="nav-link" id="beacon" href="javascript:void(0);"  data-toggle="pill"  role="tab" aria-controls="v-pills-profile"-->
+<!--                   aria-selected="false">-->
+<!--                    <img src="./icon/menu-icons/Beaconsetting-blue.svg" alt="">-->
+<!--                    ビーコン管理-->
+<!--                </a>-->
+<!--                <a class="nav-link" id="area" href="javascript:void(0);" data-toggle="pill"  role="tab" aria-controls="v-pills-profile"-->
+<!--                   aria-selected="false">-->
+<!--                    <img src="./icon/menu-icons/Areasetting-blue.svg" alt="">-->
+<!--                    エリア管理-->
+<!--                </a>-->
+<!--                <a class="nav-link" id="adminsetting" href="javascript:void(0);" data-toggle="pill" role="tab" aria-controls="v-pills-profile"-->
+<!--                   aria-selected="false">-->
+<!--                    <img src="./icon/menu-icons/management-blue.svg" alt="">-->
+<!--                    管理者設定-->
+<!--                </a>-->
+<!--                <a class="nav-link" id="department" href="javascript:void(0);" data-toggle="pill" role="tab"-->
+<!--                   aria-controls="v-pills-profile" aria-selected="false">-->
+<!--                    <img src="./icon/menu-icons/department-blue.svg" alt="">-->
+<!--                    事業所・部門設定-->
+<!--                </a>-->
+
+<!--                <a class="nav-link" id="enterprise" href="javascript:void(0);" data-toggle="pill" role="tab"-->
+<!--                   aria-controls="v-pills-profile" aria-selected="false">-->
+<!--                    <img src="./icon/menu-icons/enterprise-blue.svg" alt="">-->
+<!--                    企業・サービス設定-->
+<!--                </a>-->
+
+
+<!--                <div class="login-out" id="login-out">-->
+<!--                    <button type="button" class="btn btn-danger">-->
+<!--                        <a href="login.html">-->
+<!--                            サインアウト-->
+<!--                        </a>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="col map">
             <div class="pw-chagen" id="pw-chagen" style="display: none;">
                 <div class="pw-chagen-title">
@@ -84,20 +160,20 @@
                     </div>
                 </div>
                 <form class="pw-form">
-                    <div class="form-group" style="margin-top: 10px;">
+                    <div class="form-group form-group-sp" style="margin-top: 10px;">
                         <label>Current Password</label>
                         <input type="password" class="form-control" id="current-pw">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form-group-sp">
                         <label>New Password</label>
                         <input type="password" class="form-control" id="new-pw" value="">
                     </div>
-                    <div class="form-group" style="margin-bottom: 20px;">
+                    <div class="form-group form-group-sp" style="margin-bottom: 20px;">
                         <label>Confirm New Password</label>
                         <input type="password" class="form-control" id="confirm-new-pw" value="">
                     </div>
                 </form>
-                <button class="btn btn-primary" id="submit-btn">Submit</button>
+                <button class="btn btn-primary" id="submit-btn" style="margin-top: 20px">Submit</button>
             </div>
             <div id="mobile-record" style="display: none;">
                 <div class="pw-chagen-title">
@@ -107,12 +183,12 @@
                     </div>
                 </div>
                 <form class="pw-form">
-                    <div class="form-group time-form">
+                    <div class="form-group time-form form-group-sp">
                         <label>終了日時(To)</label>
                         <div class="selector">
                             <div class="set-val" id="historyyear">2020</div>
                             <div class="set-text">年</div>
-                            <svg t="1605594198445" class="icon" id="selector-icon" viewBox="0 0 1024 1024" version="1.1"
+                            <svg t="1605594198445" class="icon selector-icon" id="selector-icon" viewBox="0 0 1024 1024" version="1.1"
                                  xmlns="http://www.w3.org/2000/svg" p-id="3466">
                                 <path d="M750.331 457.203l-238.576 238.087-238.087-238.576z" p-id="3467"></path>
                             </svg>
@@ -123,7 +199,7 @@
                         <div class="selector">
                             <div class="set-val" id="historymonth">1</div>
                             <div class="set-text">月</div>
-                            <svg t="1605594198445" class="icon" id="selector-icon" viewBox="0 0 1024 1024" version="1.1"
+                            <svg t="1605594198445" class="icon selector-icon" id="selector-icon" viewBox="0 0 1024 1024" version="1.1"
                                  xmlns="http://www.w3.org/2000/svg" p-id="3466">
                                 <path d="M750.331 457.203l-238.576 238.087-238.087-238.576z" p-id="3467"></path>
                             </svg>
@@ -134,7 +210,7 @@
                         <div class="selector">
                             <div class="set-val" id="historyday">1</div>
                             <div class="set-text">日</div>
-                            <svg t="1605594198445" class="icon" id="selector-icon" viewBox="0 0 1024 1024" version="1.1"
+                            <svg t="1605594198445" class="icon selector-icon" id="selector-icon" viewBox="0 0 1024 1024" version="1.1"
                                  xmlns="http://www.w3.org/2000/svg" p-id="3466">
                                 <path d="M750.331 457.203l-238.576 238.087-238.087-238.576z" p-id="3467"></path>
                             </svg>
@@ -145,7 +221,7 @@
                         <div class="selector">
                             <div class="set-val" id="historyhour">1</div>
                             <div class="set-text">時</div>
-                            <svg t="1605594198445" class="icon" id="selector-icon" viewBox="0 0 1024 1024" version="1.1"
+                            <svg t="1605594198445" class="icon selector-icon" id="selector-icon" viewBox="0 0 1024 1024" version="1.1"
                                  xmlns="http://www.w3.org/2000/svg" p-id="3466">
                                 <path d="M750.331 457.203l-238.576 238.087-238.087-238.576z" p-id="3467"></path>
                             </svg>
@@ -156,7 +232,7 @@
                         <div class="selector">
                             <div class="set-val" id="historymin">1</div>
                             <div class="set-text">分</div>
-                            <svg t="1605594198445" class="icon" id="selector-icon" viewBox="0 0 1024 1024" version="1.1"
+                            <svg t="1605594198445" class="icon selector-icon" id="selector-icon" viewBox="0 0 1024 1024" version="1.1"
                                  xmlns="http://www.w3.org/2000/svg" p-id="3466">
                                 <path d="M750.331 457.203l-238.576 238.087-238.087-238.576z" p-id="3467"></path>
                             </svg>
@@ -165,12 +241,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group time-form">
+                    <div class="form-group time-form form-group-sp">
                         <label>表示時間(From)</label>
                         <div class="selector" style="width: 100px !important;">
                             <div class="set-val" style="width: 100px;" id="historytime">1</div>
-                            <div class="set-text testcase" 　style='padding-left:20px !important'>時間前</div>
-                            <svg t="1605594198445" class="icon" id="selector-icon" viewBox="0 0 1024 1024" version="1.1"
+                            <div class="set-text testcase" 　 style='padding-left:20px !important'>時間前</div>
+                            <svg t="1605594198445" class="icon selector-icon" id="selector-icon" viewBox="0 0 1024 1024" version="1.1"
                                  xmlns="http://www.w3.org/2000/svg" p-id="3466">
                                 <path d="M750.331 457.203l-238.576 238.087-238.087-238.576z" p-id="3467"></path>
                             </svg>
@@ -184,7 +260,7 @@
                             <div class="set-text" 　style='padding-left:20px !important;margin-top: -33px !important;'>
                                 X
                             </div>
-                            <svg t="1605594198445" class="icon" id="selector-icon" viewBox="0 0 1024 1024" version="1.1"
+                            <svg t="1605594198445" class="icon selector-icon" id="selector-icon" viewBox="0 0 1024 1024" version="1.1"
                                  xmlns="http://www.w3.org/2000/svg" p-id="3466">
                                 <path d="M750.331 457.203l-238.576 238.087-238.087-238.576z" p-id="3467"></path>
                             </svg>
@@ -197,9 +273,6 @@
                 <button type="submit" class="btn btn-primary" id="start-btn">Start</button>
             </div>
             <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                <div id="meun-btn">
-                    <img src="./icon/menu-icons/right.svg" id="cancel">
-                </div>
                 <div id="map" style="display: block;"></div>
                 <div id="list-btn">
                     <img src="./icon/menu-icons/left.svg" id="right-btn">
@@ -208,7 +281,7 @@
         </div>
         <div class="col col-lg-2" id="lists" style="display: none;">
             <div class="list-group title-style" id="list-box" style="position: relative;">
-                <div class="list-group-item active">
+                <div class="list-title active">
                     <p id="user-title"></p>
                     <div id="refresh-btn">
                         <img src="./icon/menu-icons/update-white.svg" alt="" id="refresh-img">

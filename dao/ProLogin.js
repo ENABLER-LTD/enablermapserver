@@ -44,7 +44,7 @@ const getcompanydetail = function (companyNo) {
 }
 
 const getcompanyname = function (companyNo) {
-    const sql = "SELECT companyname FROM enablermap.companyall where companycode=" + "'" + companyNo + "';"
+    const sql = "SELECT companyname FROM enablermap.servicesetting where companyid=" + "'" + companyNo + "';"
     return pros(sql);
 }
 
@@ -176,8 +176,8 @@ const insertdepall = function (officecode, depcode, depname, depnameeng) {
     return pros(sql);
 }
 
-const insertcompanydetail = function (pcompanycode, poffice, pdep, note) {
-    const sql = "insert into enablermap.companydetail values (" + "'" + pcompanycode + "','" + poffice + "','" + pdep + "','" + note + "',1);"
+const insertcompanydetail = function (pcompanycode, poffice, pdep, note, usestatus) {
+    const sql = "insert into enablermap.companydetail values (" + "'" + pcompanycode + "','" + poffice + "','" + pdep + "','" + note + "'," + usestatus + ");"
     return pros(sql);
 }
 
@@ -203,6 +203,23 @@ const updatedepdetail = function (poffice, depcode, depname, depnameeng, note, u
     pros(sql);
     sql = "UPDATE  enablermap.depall SET depname = " + "'" + depname + "',depnameeng =" + "'" + depnameeng + "'where depcode = " + "'" + depcode + "' and officecode = " + "'" + poffice + "';"
     return pros(sql);
+
+}
+
+const updatedepdetailsp = function (poffice, depcode, depname, depnameeng, note, usestatus,pcompanycode) {
+    try {
+        let sql = "DELETE FROM enablermap.depall where depcode='00000' and officecode = " + "'" + poffice + "';"
+        pros(sql);
+        sql = "DELETE FROM enablermap.companydetail where poffice=" + "'" + poffice + "' and pdep='00000';"
+        pros(sql);
+        sql = "insert into enablermap.depall values (" + "'" + depcode + "','" + depname + "','" + depnameeng + "','" + poffice + "');"
+        pros(sql);
+        sql = "insert into enablermap.companydetail values (" + "'" + pcompanycode + "','" + poffice + "','" + depcode + "','" + note + "'," + usestatus + ");"
+        return pros(sql);
+
+    } catch (e) {
+        console.log(e);
+    }
 
 }
 
@@ -267,5 +284,6 @@ module.exports = {
     updatedepdetail,
     deleteindoormap,
     updateindoordetail,
-    stopoffice
+    stopoffice,
+    updatedepdetailsp
 }

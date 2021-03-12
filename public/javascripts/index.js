@@ -12,36 +12,6 @@ let pnamedic = {};
 let uidlistforajax = null;
 const image = "http://104.198.245.131/icon/icon_blue.png";
 
-
-document.getElementById("area").addEventListener('click', function () {
-    window.open("./arealist");
-})
-
-document.getElementById("beacon").addEventListener('click', function () {
-    window.open("./beaconlist");
-})
-
-document.getElementById("department").addEventListener('click', function () {
-    window.open("./departmentset");
-})
-
-document.getElementById("enterprise").addEventListener('click', function () {
-    window.open("./enterpriseSettings");
-})
-
-document.getElementById("picture-list").addEventListener('click', function () {
-    window.open("./picturelist");
-})
-
-document.getElementById("user-list").addEventListener('click', function () {
-    window.open("./userlist");
-})
-
-
-document.getElementById("adminsetting").addEventListener('click', function () {
-    window.open("./admin-settings");
-})
-
 function getareadetail() {
     $.ajax({
         type: 'GET',
@@ -414,27 +384,12 @@ let mobileRecord = document.getElementById('mobile-record')
 let mobileRecordBtn = document.getElementById('mobile-record-btn')
 
 function btn() {
-    let meunBtn = document.getElementById("meun-btn")
-    let cancel = document.getElementById("cancel")
-    let meun = document.getElementById('meun')
     let lists = document.getElementById("lists")
     let listBtn = document.getElementById("list-btn")
     let rightBtn = document.getElementById('right-btn')
     let ecording = document.getElementById('ecording')
+    listBtn.style.display = 'block';
 
-    meunBtn.addEventListener('click', () => {
-        if (meun.style.display == 'none') {
-            meun.style.display = 'block'
-            if (meun.style.display == 'block') {
-                cancel.src = './icon/menu-icons/hide.svg'
-            }
-        } else {
-            meun.style.display = 'none'
-            if (meun.style.display == 'none') {
-                cancel.src = './icon/menu-icons/right.svg'
-            }
-        }
-    })
     ecording.addEventListener('click', () => {
         if (lists.style.display == 'none') {
             lists.style.display = 'block'
@@ -857,19 +812,24 @@ function treeDisplay() {
 
 //left menu icon color change
 function iconSwitch() {
-    let aClass = document.querySelectorAll('.nav-link')
-    for (let i = 0; i < aClass.length; i++) {
-        aClass[i].index = i
-        aClass[i].addEventListener('click', function () {
-            for (let n = 0; n < aClass.length; n++) {
-                const imgEle = aClass[n].getElementsByTagName('img')[0]
-                const imgSrc = imgEle.src
-                imgEle.setAttribute('src', imgSrc.replace('white','blue'))
-                console.log(imgEle)
+    let liClass = document.querySelectorAll('.nav-link')
+    for (let i = 0; i < liClass.length; i++) {
+        liClass[i].index = i
+        liClass[i].addEventListener('click', function () {
+            for (var box = 0; box < liClass.length; box++) {
+                if (liClass[box].classList.contains('active')) {
+                    liClass[box].classList.remove('active')
+                }
             }
-            const imgEle = aClass[this.index].getElementsByTagName('img')[0]
+            liClass[i].classList.add('active')
+            for (let n = 0; n < liClass.length; n++) {
+                const imgEle = liClass[n].getElementsByTagName('img')[0]
+                const imgSrc = imgEle.src
+                imgEle.setAttribute('src', imgSrc.replace('blue', 'gray'))
+            }
+            const imgEle = liClass[this.index].getElementsByTagName('img')[0]
             const imgSrc = imgEle.src
-            imgEle.setAttribute('src', imgSrc.replace('blue','white'))
+            imgEle.setAttribute('src', imgSrc.replace('gray', 'blue'))
         })
     }
 }
@@ -954,12 +914,13 @@ function dorole() {
                     if (data[i].officesetting != 1) {
                         $("#department").remove();
                     }
-                    if (data[i].beaconshow != 1) {
+                    if (data[i].beaconshow != 1 || companyservice.beacon != 1) {
                         $("#beacon").remove();
                     }
-                    if (data[i].beaconsetting != 1) {
-                        $("#beacon-point").remove();
+                    if (companyservice.area != 1 || data[i].areasetting != 1) {
+                        $("#area").remove();
                     }
+
                 }
 
             }
