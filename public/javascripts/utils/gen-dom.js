@@ -77,7 +77,7 @@ class GenDOM {
                     <img src="./icon/menu-icons/Historydisplay-blue.svg" alt=""> 
                     <a href="#" class="resume-display-btn"><span>過去履歴表示</span></a>
                 </li>
-                <li class="updateuserbtn">
+                <li class="updateuserbtn" style="display: none">
                     <img src="./icon/menu-icons/user-setting-blue.svg" alt="">
                     <a class="urlset"><span>ユーザー編集</span></a>
                 </li>

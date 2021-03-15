@@ -206,7 +206,7 @@ const updatedepdetail = function (poffice, depcode, depname, depnameeng, note, u
 
 }
 
-const updatedepdetailsp = function (poffice, depcode, depname, depnameeng, note, usestatus,pcompanycode) {
+const updatedepdetailsp = function (poffice, depcode, depname, depnameeng, note, usestatus, pcompanycode) {
     try {
         let sql = "DELETE FROM enablermap.depall where depcode='00000' and officecode = " + "'" + poffice + "';"
         pros(sql);
@@ -229,6 +229,26 @@ const stopoffice = function (poffice) {
 
 }
 
+const getuserlistbyuser = function (pnumber) {
+    let sql = "Select * from enablermap.company where pnumber=" + "'" + pnumber + "';"
+    return pros(sql);
+}
+
+const getuserlistbydep = function (poffice, pdep) {
+    let sql = "SELECT * FROM enablermap.company where poffice=" + "'" + poffice + "' AND pdep = "+"'"+pdep+"';"
+    return pros(sql);
+}
+
+const getuserlistbyoffice = function (poffice) {
+    let sql = "SELECT * FROM enablermap.company where poffice=" + "'" + poffice + "';"
+    return pros(sql);
+}
+
+const getuserlistforall = function (){
+    let sql = "SELECT * FROM enablermap.company;"
+    return pros(sql);
+}
+
 
 const pros = function (sql) {
     return new Promise((resolve, reject) => {
@@ -245,6 +265,9 @@ const pros = function (sql) {
 
 
 module.exports = {
+    getuserlistforall,
+    getuserlistbyoffice,
+    getuserlistbydep,
     queryUserByUid,
     insertUser,
     updateUserPw,
@@ -285,5 +308,6 @@ module.exports = {
     deleteindoormap,
     updateindoordetail,
     stopoffice,
-    updatedepdetailsp
+    updatedepdetailsp,
+    getuserlistbyuser
 }

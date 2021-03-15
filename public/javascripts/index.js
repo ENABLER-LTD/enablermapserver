@@ -12,6 +12,45 @@ let pnamedic = {};
 let uidlistforajax = null;
 const image = "http://104.198.245.131/icon/icon_blue.png";
 
+
+$.ajax({
+    type: 'GET',
+    url: mapconfig.getpersondetail() + adminpnumber,
+    async: false,
+    success: function (data) {
+        $.cookie("roleid", data[0].prole);
+    },
+    error: function (err) {
+        console.log(err);
+    }
+});
+
+$.ajax({
+    type: 'POST',
+    async: false,
+    contentType: "application/json",
+    url: mapconfig.getuserlistbyrole(),
+    data: JSON.stringify({
+        "data": {
+            "admin": $.cookie("enabermap.uid"),
+            "role": $.cookie('roleid'),
+        }
+    }),
+    success: function (data) {
+        if (data != null) {
+            UserListData = data;
+            for (let i = 0; i < data.length; i++) {
+                pnumberlist.push(data[i].pnumber);
+                var uid = data[i].pcompanycode + data[i].poffice + data[i].pdep + data[i].pnumber;
+                uidlist.push(uid);
+            }
+        }
+    },
+    error: function (err) {
+        console.log(err);
+    }
+})
+
 function getareadetail() {
     $.ajax({
         type: 'GET',
@@ -263,24 +302,6 @@ var createCompanyTree = function (parent, treeData, level = 1) {
 }
 
 var drawPosition = function () {
-    $.ajax({
-        type: 'GET',
-        async: false,
-        url: mapconfig.getuserlist() + companycode,
-        success: function (data) {
-            if (data != null) {
-                UserListData = data;
-                for (let i = 0; i < data.length; i++) {
-                    pnumberlist.push(data[i].pnumber);
-                    var uid = data[i].pcompanycode + data[i].poffice + data[i].pdep + data[i].pnumber;
-                    uidlist.push(uid);
-                }
-            }
-        },
-        error: function (err) {
-            console.log(err);
-        }
-    })
 
     getpersondetail();
 
@@ -384,11 +405,30 @@ let mobileRecord = document.getElementById('mobile-record')
 let mobileRecordBtn = document.getElementById('mobile-record-btn')
 
 function btn() {
+    let meunBtn = document.getElementById("meun-btn")
+    let cancel = document.getElementById("cancel")
+    let meun = document.getElementById('meun')
     let lists = document.getElementById("lists")
     let listBtn = document.getElementById("list-btn")
     let rightBtn = document.getElementById('right-btn')
     let ecording = document.getElementById('ecording')
     listBtn.style.display = 'block';
+
+    meunBtn.style.display = 'block'
+
+    meunBtn.addEventListener('click', () => {
+        if (meun.style.display == 'none') {
+            meun.style.display = 'block'
+            if (meun.style.display == 'block') {
+                cancel.src = './icon/menu-icons/hide.svg'
+            }
+        } else {
+            meun.style.display = 'none'
+            if (meun.style.display == 'none') {
+                cancel.src = './icon/menu-icons/right.svg'
+            }
+        }
+    })
 
     ecording.addEventListener('click', () => {
         if (lists.style.display == 'none') {
@@ -854,7 +894,6 @@ function dorole() {
             pnumber = data[0].pnumber;
             pname = data[0].pname;
             rolenumber = data[0].prole;
-            $.cookie("roleid", rolenumber);
         },
         error: function (err) {
             console.log(err);
@@ -903,7 +942,7 @@ function dorole() {
                         $("#ecording").remove();
                     }
                     if (data[i].indoormapsetting != 1 || companyservice.indoormap != 1) {
-                        $("#picture-list").remove();
+                        $("#picturelist").remove();
                     }
                     if (data[i].servicesetting != 1) {
                         $("#enterprise").remove();
@@ -930,72 +969,73 @@ function dorole() {
         }
     })
 
-    //user-list role
-    //user
-    if (rolenumber == 5) {
-        document.querySelectorAll('.checkbox').forEach(function (item) {
-            item.style = "pointer-events: none"
-        });
-        document.querySelectorAll('.menu-btn-box').forEach(function (item) {
-            item.style = "pointer-events: none"
-        });
-        document.querySelectorAll('.node-text-name').forEach(function (item) {
-            if (item.innerText == pname) {
-                item.parentNode.previousSibling.style = "pointer-events: auto";
-                item.parentNode.nextSibling.nextSibling.style = "pointer-events: auto";
-
-            }
-        })
-    }
-
-    //dep user
-    if (rolenumber == 4) {
-        document.querySelectorAll('.checkbox').forEach(function (item) {
-            item.style = "pointer-events: none"
-        });
-        document.querySelectorAll('.menu-btn-box').forEach(function (item) {
-            item.style = "pointer-events: none"
-        });
-        document.querySelectorAll('.node-text-name').forEach(function (item) {
-            if (item.innerText == depdic[dep]) {
-                item.parentNode.previousSibling.style = "pointer-events: auto";
-                var tempdiv = item.parentNode.parentNode.nextSibling;
-                while (tempdiv.className.toString() == "peer-node level-3") {
-                    tempdiv.firstChild.nextSibling.nextSibling.nextSibling.style = "pointer-events: auto";
-                    tempdiv.firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.style = "pointer-events: auto";
-                    tempdiv = tempdiv.nextSibling;
-                }
-
-            }
-        })
-    }
-
-    //office user
-    if (rolenumber == 3) {
-        document.querySelectorAll('.checkbox').forEach(function (item) {
-            item.style = "pointer-events: none"
-        });
-        document.querySelectorAll('.menu-btn-box').forEach(function (item) {
-            item.style = "pointer-events: none"
-        });
-        document.querySelectorAll('.node-text-name').forEach(function (item) {
-            if (item.innerText == officedic[office]) {
-                item.parentNode.previousSibling.style = "pointer-events: auto";
-                var tempdiv = item.parentNode.parentNode.nextSibling;
-                while (tempdiv.className.toString() != "peer-node level-1") {
-                    if (tempdiv.className.toString() == "peer-node level-2") {
-                        tempdiv.firstChild.nextSibling.nextSibling.style = "pointer-events: auto";
-                    }
-                    if (tempdiv.className.toString() == "peer-node level-3") {
-                        tempdiv.firstChild.nextSibling.nextSibling.nextSibling.style = "pointer-events: auto";
-                        tempdiv.firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.style = "pointer-events: auto";
-                    }
-                    tempdiv = tempdiv.nextSibling;
-                }
-
-            }
-        })
-    }
+    // //user-list role
+    // //user
+    // if (rolenumber == 5) {
+    //     document.querySelectorAll('.checkbox').forEach(function (item) {
+    //         item.style = "pointer-events: none"
+    //     });
+    //     document.querySelectorAll('.menu-btn-box').forEach(function (item) {
+    //         item.style = "pointer-events: none"
+    //     });
+    //     document.querySelectorAll('.node-text-name').forEach(function (item) {
+    //         if (item.innerText == pname) {
+    //             item.parentNode.previousSibling.style = "pointer-events: auto";
+    //             item.parentNode.nextSibling.nextSibling.style = "pointer-events: auto";
+    //
+    //         }
+    //     })
+    // }
+    //
+    // //dep user
+    // if (rolenumber == 4) {
+    //     document.querySelectorAll('.checkbox').forEach(function (item) {
+    //         item.style = "pointer-events: none"
+    //     });
+    //     document.querySelectorAll('.menu-btn-box').forEach(function (item) {
+    //         item.style = "pointer-events: none"
+    //     });
+    //     document.querySelectorAll('.node-text-name').forEach(function (item) {
+    //         if (item.innerText == depdic[dep]) {
+    //             item.parentNode.previousSibling.style = "pointer-events: auto";
+    //             var tempdiv = item.parentNode.parentNode.nextSibling;
+    //             console.log(tempdiv.className);
+    //             while(tempdiv.className.toString() == "peer-node level-3") {
+    //                 tempdiv.firstChild.nextSibling.nextSibling.nextSibling.style = "pointer-events: auto";
+    //                 tempdiv.firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.style = "pointer-events: auto";
+    //                 tempdiv = tempdiv.nextSibling;
+    //             }
+    //
+    //         }
+    //     })
+    // }
+    //
+    // //office user
+    // if (rolenumber == 3) {
+    //     document.querySelectorAll('.checkbox').forEach(function (item) {
+    //         item.style = "pointer-events: none"
+    //     });
+    //     document.querySelectorAll('.menu-btn-box').forEach(function (item) {
+    //         item.style = "pointer-events: none"
+    //     });
+    //     document.querySelectorAll('.node-text-name').forEach(function (item) {
+    //         if (item.innerText == officedic[office]) {
+    //             item.parentNode.previousSibling.style = "pointer-events: auto";
+    //             var tempdiv = item.parentNode.parentNode.nextSibling;
+    //             while (tempdiv.className.toString() != "peer-node level-1") {
+    //                 if (tempdiv.className.toString() == "peer-node level-2") {
+    //                     tempdiv.firstChild.nextSibling.nextSibling.style = "pointer-events: auto";
+    //                 }
+    //                 if (tempdiv.className.toString() == "peer-node level-3") {
+    //                     tempdiv.firstChild.nextSibling.nextSibling.nextSibling.style = "pointer-events: auto";
+    //                     tempdiv.firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.style = "pointer-events: auto";
+    //                 }
+    //                 tempdiv = tempdiv.nextSibling;
+    //             }
+    //
+    //         }
+    //     })
+    // }
 
 }
 

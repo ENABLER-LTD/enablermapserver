@@ -223,4 +223,8 @@ class mapconfig {
         return this.beaconurl + 'getareadetailbyname/'
     }
 
+    getuserlistbyrole(){
+        return this.baseurl +'getuserlistbyrole'
+    }
+
 }

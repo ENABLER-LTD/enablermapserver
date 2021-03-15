@@ -146,4 +146,10 @@ if (roleid == 3) {
     })
 }
 
+if (roleid == 2) {
+    document.querySelectorAll('.roleid-1').forEach(function (item) {
+        item.parentNode.remove();
+    })
+}
+
 

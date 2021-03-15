@@ -405,6 +405,38 @@ router.get('/getuserlist/:companyNo', async function (req, res, next) {
     }
 });
 
+//GET USERLIST
+router.post('/getuserlistbyrole', async function (req, res, next) {
+    try {
+        if (req.body.data.role == '5') {
+            const result = await userpro.getuserlistbyuser(req.body.data.admin.substring(15, 20));
+            var dataString = JSON.stringify(result);
+            var data = JSON.parse(dataString);
+            res.send(data);
+        } else if (req.body.data.role == '4') {
+            const result = await userpro.getuserlistbydep(req.body.data.admin.substring(5, 10), req.body.data.admin.substring(10, 15));
+            var dataString = JSON.stringify(result);
+            var data = JSON.parse(dataString);
+            res.send(data);
+        }else if (req.body.data.role == '3') {
+            const result = await userpro.getuserlistbyoffice(req.body.data.admin.substring(5, 10));
+            var dataString = JSON.stringify(result);
+            var data = JSON.parse(dataString);
+            res.send(data);
+        }else{
+            const result = await userpro.getuserlistforall();
+            var dataString = JSON.stringify(result);
+            var data = JSON.parse(dataString);
+            res.send(data);
+        }
+
+    } catch (e) {
+        console.log(e);
+        res.send(null);
+    }
+});
+
+
 //企業情報取得
 router.get('/getcompanydetail/:companyNo', async function (req, res, next) {
     const result = await userpro.getcompanydetail(req.params.companyNo);
@@ -643,7 +675,7 @@ router.post('/updatedepdetail', async function (req, res, next) {
 router.post('/updatedepdetailsp', async function (req, res, next) {
     console.log(req.body.data.depcode);
     try {
-        const result = await userpro.updatedepdetailsp(req.body.data.poffice, req.body.data.depcode, req.body.data.depname, req.body.data.depnameeng, req.body.data.note, req.body.data.usestatus,req.body.data.pcompanycode);
+        const result = await userpro.updatedepdetailsp(req.body.data.poffice, req.body.data.depcode, req.body.data.depname, req.body.data.depnameeng, req.body.data.note, req.body.data.usestatus, req.body.data.pcompanycode);
         res.send(result);
     } catch (e) {
         console.log(e);
