@@ -231,6 +231,11 @@
             document.getElementById('exampleFormControlInput1').value = data[0].mail;
             document.getElementById('inputPassword').value = data[0].pwd;
             $('#role').find("option[value='" + data[0].prole + "']").attr("selected", true);
+            console.log(data[0].prole);
+            if($.cookie('roleid') > Number(data[0].prole)){
+                alert('権限不足！操作禁止！');
+                window.close();
+            }
         },
         error: function (err) {
             console.log(err);
@@ -337,6 +342,7 @@
 
     if(roleid == "2"){
         $('#role').find('[value="1"]').remove();
+        $('#role').find('[value="2"]').remove();
     }
 
 </script>

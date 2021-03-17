@@ -29,6 +29,7 @@
     position: relative;
     margin-bottom: 5px;
     padding: 0px 10px;
+    flex-wrap: nowrap;
 }
 .peer-node .icon-svg,.peer-node .checkbox ,.indentation-box{
     position: relative;
@@ -48,7 +49,6 @@
     padding: 2px;
 }
 .peer-node .node-text{
-    width: 90px;
     height: 30px;
     line-height: 30px;
     float: left;
@@ -63,6 +63,7 @@
 .peer-node .checkbox{
     border: 1px solid #ccc;
     border-radius: 2px;
+    height: 16px;
 }
 .peer-node .checkbox-active{
     background-color: #0e6eb4;

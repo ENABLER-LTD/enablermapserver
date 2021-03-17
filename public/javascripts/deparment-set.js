@@ -87,7 +87,7 @@ if (roleid == "3") {
         }
     })
 
-    document.getElementById("hidebtn").style.display = "none";
+    document.getElementById('addurl').href = './updataoffice/' + officetarget;
 } else {
     $.ajax({
         type: 'GET',

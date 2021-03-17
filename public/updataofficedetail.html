@@ -89,6 +89,10 @@
     var depdiceng = {};
     var alldepcode = [];
 
+    if ($.cookie("roleid") == "3") {
+        document.getElementById("officename").disabled = "disabled";
+        document.getElementById("officenameeng").disabled = "disabled";
+    }
 
     $.ajax({
         type: 'GET',

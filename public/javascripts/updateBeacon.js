@@ -4,6 +4,22 @@ var url = window.location.href.toString();
 var index = url.lastIndexOf("\/");
 var b_id = url.substring(index + 1, url.length);
 
+function isUUIDOne(strValue )  {
+    var  objRegExp= /^[0-9a-fA-F]{8}$/;
+    return  objRegExp.test(strValue);
+}
+
+function isUUIDTwoFour(strValue )  {
+    var  objRegExp= /^[0-9a-fA-F]{4}$/;
+    return  objRegExp.test(strValue);
+}
+
+function isUUIDFive(strValue )  {
+    var  objRegExp= /^[0-9a-fA-F]{12}$/;
+    return  objRegExp.test(strValue);
+}
+
+
 $.ajax({
     type: 'GET',
     url: mapconfig.getBeaconByid() + b_id,
@@ -42,8 +58,9 @@ document.getElementById("submit-btn").addEventListener('click', function () {
     var b_floor = document.getElementById("floor").value;
     var b_note = document.getElementById("note").value;
 
-    if(document.getElementById("uuid-one").value.length != 8　|| document.getElementById("uuid-two").value.length != 4 || document.getElementById("uuid-three").value.length != 4 || document.getElementById("uuid-four").value.length != 4 || document.getElementById("uuid-fives").value.length != 12){
-        alert("UUIDを桁数を確認ください。")
+    if(!isUUIDOne(document.getElementById("uuid-one").value)　|| !isUUIDTwoFour(document.getElementById("uuid-two").value) || !isUUIDTwoFour(document.getElementById("uuid-three").value) || !isUUIDTwoFour(document.getElementById("uuid-four").value) || !isUUIDFive(document.getElementById("uuid-fives").value)){
+        alert("適切な" +
+            "UUIDを入力してください。")
     }else{
         if (b_name != "" && b_uuid != "" && b_major != "" && b_minor != "" && b_txpower != "") {
             $.ajax({

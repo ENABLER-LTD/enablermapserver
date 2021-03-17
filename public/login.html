@@ -187,7 +187,8 @@
                         window.location.href = '/login';
                     } else {
                         $.cookie('enabermap.uid', JSON.parse(data).uid);
-                        wait(3000);
+                        $.cookie('adminmail', $("#email").val());
+                        wait(1000);
                         window.location.href = '/mainmap';
                     }
                 },

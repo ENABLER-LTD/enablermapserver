@@ -18,7 +18,7 @@ class GenDOM {
         ele_node.classList.add(`level-${indent}`)
         ele_node.style.display = indent == 1 ? 'block' : 'none'
         if (indent === 1) {
-            ele_node.style.display = 'block'
+            ele_node.style.display = 'flex'
         }
         // Indent Block
         for (let i = 0; i < indent; i++) {
@@ -75,9 +75,9 @@ class GenDOM {
             <ul>
                 <li>
                     <img src="./icon/menu-icons/Historydisplay-blue.svg" alt=""> 
-                    <a href="#" class="resume-display-btn"><span>過去履歴表示</span></a>
+                    <a href="#" class="resume-display-btn"><span>履歴表示</span></a>
                 </li>
-                <li class="updateuserbtn" style="display: none">
+                <li class="updateuserbtn">
                     <img src="./icon/menu-icons/user-setting-blue.svg" alt="">
                     <a class="urlset"><span>ユーザー編集</span></a>
                 </li>

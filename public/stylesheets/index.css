@@ -65,7 +65,7 @@ html, body, .map-box, .row {
     top: 50%;
     transform: translate(-50%,-50%);
 }
-#meun ul li,#meun .login-out{
+#meun ul li,#meun .login-out,#meun .user-emil{
     width: 85%;
     height: 48px;
     position: relative;
@@ -98,7 +98,7 @@ html, body, .map-box, .row {
 #meun ul li p{
     margin-bottom: 0 !important
 }
-#meun ul li img,#meun .login-out img{
+#meun ul li img,#meun .login-out img,#meun .user-emil img{
     float: left;
     width: 18px;
     margin-right: 10px;
@@ -111,6 +111,15 @@ html, body, .map-box, .row {
     height: 48px;
     position: absolute;
     bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#meun .user-emil{
+    width: 85%;
+    height: 48px;
+    position: absolute;
+    bottom: 68px;
     left: 50%;
     transform: translateX(-50%);
 }

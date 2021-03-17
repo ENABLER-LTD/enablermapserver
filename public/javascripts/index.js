@@ -12,6 +12,8 @@ let pnamedic = {};
 let uidlistforajax = null;
 const image = "http://104.198.245.131/icon/icon_blue.png";
 
+document.getElementById("user-mail").innerText = $.cookie("adminmail");
+
 
 $.ajax({
     type: 'GET',
@@ -366,7 +368,14 @@ var showallposition = function () {
 
     markerCluster = new MarkerClusterer(map, markers, {
         imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
-    })
+    });
+    google.maps.event.addListener(markerCluster, 'clusterclick', function (cluster) {
+        var tempnamelist = "ユーザー情報リスト: \\\n ";
+        for (var value of cluster.getMarkers()) {
+            tempnamelist = tempnamelist + "ユーザー名：" + value.label + " \\\n ";
+        }
+        alert(tempnamelist.replaceAll("\\", " "));
+    });
 
 }
 
@@ -1058,6 +1067,7 @@ function makeurl() {
                 }
                 document.querySelectorAll('.urlset').forEach(function (item) {
                     item.href = "./updatauserset/" + data[0];
+                    item.target = "_blank";
                 })
 
 
